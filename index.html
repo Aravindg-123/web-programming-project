@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fisheries Management Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                    <path d="M7 12c0-1.38.56-2.63 1.46-3.54M17 12c0 1.38-.56 2.63-1.46 3.54"/>
+                </svg>
+                <span>Fisheries Management</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active">Dashboard</a></li>
+                <li><a href="quotas.html" class="nav-link">Fishing Quotas</a></li>
+                <li><a href="seasonal-banks.html" class="nav-link">Seasonal Banks</a></li>
+                <li><a href="alerts.html" class="nav-link">Overfishing Alerts</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Header Section -->
+        <header class="dashboard-header">
+            <h1>Fisheries Management Dashboard</h1>
+            <p>Real-time monitoring and management of marine resources</p>
+        </header>
+
+        <!-- Quick Stats Section -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon icon-quota">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
+                    </svg>
+                </div>
+                <div class="stat-content">
+                    <h3>Total Quota</h3>
+                    <p class="stat-value">8,500</p>
+                    <p class="stat-unit">tons/year</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon icon-catch">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                    </svg>
+                </div>
+                <div class="stat-content">
+                    <h3>Current Catch</h3>
+                    <p class="stat-value">6,200</p>
+                    <p class="stat-unit">tons (73%)</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon icon-alert">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                    </svg>
+                </div>
+                <div class="stat-content">
+                    <h3>Active Alerts</h3>
+                    <p class="stat-value">3</p>
+                    <p class="stat-unit">requiring attention</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon icon-banks">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                    </svg>
+                </div>
+                <div class="stat-content">
+                    <h3>Seasonal Banks</h3>
+                    <p class="stat-value">12</p>
+                    <p class="stat-unit">active regions</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Cards Section -->
+        <section class="dashboard-section">
+            <h2>Management Overview</h2>
+            <div class="cards-grid">
+                <!-- Fishing Quotas Card -->
+                <a href="quotas.html" class="dashboard-card card-hover">
+                    <div class="card-header">
+                        <h3>Fishing Quotas</h3>
+                        <span class="badge badge-info">View Details →</span>
+                    </div>
+                    <div class="card-body">
+                        <p>Monitor and manage total allowable catches (TAC) for different species and regions.</p>
+                        <div class="card-stats">
+                            <div class="mini-stat">
+                                <span class="label">Species Managed</span>
+                                <span class="value">15</span>
+                            </div>
+                            <div class="mini-stat">
+                                <span class="label">Utilization Rate</span>
+                                <span class="value">73%</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Seasonal Banks Card -->
+                <a href="seasonal-banks.html" class="dashboard-card card-hover">
+                    <div class="card-header">
+                        <h3>Seasonal Banks</h3>
+                        <span class="badge badge-success">View Details →</span>
+                    </div>
+                    <div class="card-body">
+                        <p>Track and manage fishing areas based on seasonal patterns and breeding cycles.</p>
+                        <div class="card-stats">
+                            <div class="mini-stat">
+                                <span class="label">Active Banks</span>
+                                <span class="value">12</span>
+                            </div>
+                            <div class="mini-stat">
+                                <span class="label">Restricted Areas</span>
+                                <span class="value">3</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Overfishing Alerts Card -->
+                <a href="alerts.html" class="dashboard-card card-hover">
+                    <div class="card-header">
+                        <h3>Overfishing Alerts</h3>
+                        <span class="badge badge-danger">View Details →</span>
+                    </div>
+                    <div class="card-body">
+                        <p>Real-time monitoring for potential overfishing incidents and conservation warnings.</p>
+                        <div class="card-stats">
+                            <div class="mini-stat">
+                                <span class="label">Critical Alerts</span>
+                                <span class="value">3</span>
+                            </div>
+                            <div class="mini-stat">
+                                <span class="label">Warning Level</span>
+                                <span class="value">High</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Recent Activity Section -->
+        <section class="dashboard-section">
+            <h2>Recent Activity</h2>
+            <div class="activity-list">
+                <div class="activity-item">
+                    <div class="activity-indicator alert"></div>
+                    <div class="activity-content">
+                        <p class="activity-title">High catch alert for Atlantic Cod</p>
+                        <p class="activity-time">2 hours ago</p>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-indicator warning"></div>
+                    <div class="activity-content">
+                        <p class="activity-title">Seasonal bank restricted: North Atlantic Zone 3</p>
+                        <p class="activity-time">5 hours ago</p>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-indicator success"></div>
+                    <div class="activity-content">
+                        <p class="activity-title">Quota update: Mackerel population survey completed</p>
+                        <p class="activity-time">1 day ago</p>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-indicator info"></div>
+                    <div class="activity-content">
+                        <p class="activity-title">New fishing license issued for Zone 5</p>
+                        <p class="activity-time">2 days ago</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Fisheries Management System. All rights reserved.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seasonal Banks - Fisheries Management Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                    <path d="M7 12c0-1.38.56-2.63 1.46-3.54M17 12c0 1.38-.56 2.63-1.46 3.54"/>
+                </svg>
+                <span>Fisheries Management</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Dashboard</a></li>
+                <li><a href="quotas.html" class="nav-link">Fishing Quotas</a></li>
+                <li><a href="seasonal-banks.html" class="nav-link">Seasonal Banks</a></li>
+                <li><a href="alerts.html" class="nav-link">Overfishing Alerts</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Page Header -->
+        <section class="page-header">
+            <h1>Seasonal Banks Management</h1>
+            <p>Monitor fishing areas and seasonal restrictions based on breeding cycles and population dynamics</p>
+        </section>
+
+        <!-- Summary Stats -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon icon-banks">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                    </svg>
+                </div>
+                <div class="stat-content">
+                    <h3>Active Banks</h3>
+                    <p class="stat-value">12</p>
+                    <p class="stat-unit">currently open for fishing</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon icon-alert">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                    </svg>
+                </div>
+                <div class="stat-content">
+                    <h3>Restricted Areas</h3>
+                    <p class="stat-value">3</p>
+                    <p class="stat-unit">breeding/protected zones</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon icon-catch">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                    </svg>
+                </div>
+                <div class="stat-content">
+                    <h3>Protected Capacity</h3>
+                    <p class="stat-value">2,150</p>
+                    <p class="stat-unit">tons estimated</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon icon-quota">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
+                    </svg>
+                </div>
+                <div class="stat-content">
+                    <h3>Upcoming Seasons</h3>
+                    <p class="stat-value">5</p>
+                    <p class="stat-unit">in next 12 months</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Active Seasonal Banks -->
+        <section class="dashboard-section">
+            <h2>Active Seasonal Banks</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bank Name</th>
+                            <th>Region</th>
+                            <th>Status</th>
+                            <th>Primary Species</th>
+                            <th>Estimated Capacity</th>
+                            <th>Opening Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Grand Banks</strong></td>
+                            <td>North Atlantic</td>
+                            <td><span class="badge badge-success" style="background: #e8f5e9; color: #28a745;">Open</span></td>
+                            <td>Atlantic Cod, Haddock</td>
+                            <td>450 tons</td>
+                            <td>January 15, 2026</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dogger Bank</strong></td>
+                            <td>North Sea</td>
+                            <td><span class="badge badge-success" style="background: #e8f5e9; color: #28a745;">Open</span></td>
+                            <td>Plaice, Sole</td>
+                            <td>320 tons</td>
+                            <td>February 1, 2026</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Rockall Bank</strong></td>
+                            <td>West of Ireland</td>
+                            <td><span class="badge badge-success" style="background: #e8f5e9; color: #28a745;">Open</span></td>
+                            <td>Greater Silversmelt</td>
+                            <td>280 tons</td>
+                            <td>December 20, 2025</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Porcupine Bank</strong></td>
+                            <td>Irish Waters</td>
+                            <td><span class="badge badge-warning" style="background: #fff3e0; color: #ff9800;">Monitored</span></td>
+                            <td>Hake</td>
+                            <td>180 tons</td>
+                            <td>March 1, 2026</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hatton Bank</strong></td>
+                            <td>Atlantic</td>
+                            <td><span class="badge badge-success" style="background: #e8f5e9; color: #28a745;">Open</span></td>
+                            <td>Roundnose Grenadier</td>
+                            <td>150 tons</td>
+                            <td>January 1, 2026</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lousy Bank</strong></td>
+                            <td>Irish Shelf</td>
+                            <td><span class="badge badge-success" style="background: #e8f5e9; color: #28a745;">Open</span></td>
+                            <td>Mackerel</td>
+                            <td>420 tons</td>
+                            <td>February 10, 2026</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Restricted and Protected Areas -->
+        <section class="dashboard-section">
+            <h2>Restricted & Protected Areas</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Area Name</th>
+                            <th>Restriction Type</th>
+                            <th>Reason</th>
+                            <th>Estimated Closure Duration</th>
+                            <th>Enforcement Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>North Atlantic Breeding Zone</strong></td>
+                            <td><span class="badge badge-danger" style="background: #ffebee; color: #dc3545;">Fully Closed</span></td>
+                            <td>Spawning Season Protection</td>
+                            <td>March 15 - May 30, 2026</td>
+                            <td>Active Patrol</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sensitive Ecosystem Area - Zone A</strong></td>
+                            <td><span class="badge badge-danger" style="background: #ffebee; color: #dc3545;">Fully Closed</span></td>
+                            <td>Conservation Reserve</td>
+                            <td>Year-round</td>
+                            <td>Active Patrol</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Juvenile Fish Nursery</strong></td>
+                            <td><span class="badge badge-warning" style="background: #fff3e0; color: #ff9800;">Restricted</span></td>
+                            <td>Population Recovery</td>
+                            <td>April 1 - July 1, 2026</td>
+                            <td>Monitoring</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Seasonal Calendar -->
+        <section class="dashboard-section">
+            <h2>2026 Seasonal Calendar</h2>
+            <div class="two-column" style="margin-top: 30px;">
+                <div style="display: grid; gap: 15px;">
+                    <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                        <h3 style="margin-bottom: 15px; color: var(--primary-color);">Q1 (Jan - Mar)</h3>
+                        <ul style="list-style: none;">
+                            <li style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">✓ Grand Banks opens</li>
+                            <li style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">✓ Dogger Bank opens</li>
+                            <li style="padding: 8px 0;">→ Begin breeding season restrictions</li>
+                        </ul>
+                    </div>
+                    <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                        <h3 style="margin-bottom: 15px; color: #ff9800;">Q2 (Apr - Jun)</h3>
+                        <ul style="list-style: none;">
+                            <li style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">✗ Enforced spawning season closure</li>
+                            <li style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">→ Population surveys</li>
+                            <li style="padding: 8px 0;">→ Summer migration monitoring</li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="display: grid; gap: 15px;">
+                    <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                        <h3 style="margin-bottom: 15px; color: #28a745;">Q3 (Jul - Sep)</h3>
+                        <ul style="list-style: none;">
+                            <li style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">✓ Post-spawning reopening</li>
+                            <li style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">✓ Juvenile protection period ends</li>
+                            <li style="padding: 8px 0;">→ Peak fishing season</li>
+                        </ul>
+                    </div>
+                    <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                        <h3 style="margin-bottom: 15px; color: #17a2b8;">Q4 (Oct - Dec)</h3>
+                        <ul style="list-style: none;">
+                            <li style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">✓ Autumn migration period</li>
+                            <li style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">→ Year-end quota review</li>
+                            <li style="padding: 8px 0;">→ Winter spawning preparation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Bank Updates -->
+        <section class="dashboard-section">
+            <h2>Recent Bank Updates</h2>
+            <div class="activity-list">
+                <div class="activity-item">
+                    <div class="activity-indicator success"></div>
+                    <div class="activity-content">
+                        <p class="activity-title">Grand Banks: Fishing quota increased to 450 tons due to population recovery</p>
+                        <p class="activity-time">2 days ago</p>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-indicator warning"></div>
+                    <div class="activity-content">
+                        <p class="activity-title">North Atlantic Breeding Zone: Closure extended by 2 weeks due to late spawning</p>
+                        <p class="activity-time">5 days ago</p>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-indicator info"></div>
+                    <div class="activity-content">
+                        <p class="activity-title">Porcupine Bank: Ecological survey completed - stable population confirmed</p>
+                        <p class="activity-time">1 week ago</p>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-indicator alert"></div>
+                    <div class="activity-content">
+                        <p class="activity-title">Dogger Bank: Early opening approved following population assessment</p>
+                        <p class="activity-time">10 days ago</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Action Buttons -->
+        <section class="dashboard-section">
+            <button class="btn btn-primary">Download Seasonal Calendar</button>
+            <button class="btn btn-secondary">Request Bank Assessment</button>
+            <button class="btn btn-danger" style="margin-left: 10px;">Report Illegal Closure Breach</button>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Fisheries Management System. All rights reserved.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
