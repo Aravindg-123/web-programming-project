@@ -1,8 +1,11 @@
 # 🐟 MARINE BOARD - Fisheries Resources Management Dashboard
 
+
 > A production-grade, glassmorphic web dashboard for real-time fisheries monitoring — built with vanilla HTML, CSS, and JavaScript. No frameworks. No build tools. Open in a browser and it just works.
 
 ---
+
+This project is part of the course, **BCSE203E - Web Programming** under Respected Faculty **Dr. Suvidha Rupesh Kumar** madam.
 
 ## Table of Contents
 
@@ -549,4 +552,3 @@ This project is provided for educational and demonstration purposes.
 
 ---
 
-*Built with ❤️ and vanilla web technologies. No frameworks were harmed in the making of this dashboard.*
