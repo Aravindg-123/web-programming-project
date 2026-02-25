@@ -5,7 +5,9 @@
 
 ---
 
-This project is part of the course, **BCSE203E - Web Programming** under Respected Faculty **Dr. Suvidha Rupesh Kumar** madam.
+This project is part of the course, 
+
+**BCSE203E - Web Programming** under Respected Faculty **Dr. Suvidha Rupesh Kumar madam**.
 
 ## Table of Contents
 
