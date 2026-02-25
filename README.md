@@ -200,6 +200,8 @@ Dedicated seasonal bans page. Contains: KPI strip, zone status bar chart, ban co
 
 ## 5. Pages & Features in Detail
 
+### **DISCLAIMER**: The data present in the web-pages are ***HARDCODED*** and ***PUBLIC*** Data. 
+
 ### Page 1 — Main Dashboard (`index.html`)
 
 The command centre of the application. Designed for at-a-glance awareness and rapid drill-down.
