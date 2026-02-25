@@ -1,4 +1,4 @@
-# 🐟 Fisheries Resources Management Dashboard
+# 🐟 MARINE BOARD - Fisheries Resources Management Dashboard
 
 > A production-grade, glassmorphic web dashboard for real-time fisheries monitoring — built with vanilla HTML, CSS, and JavaScript. No frameworks. No build tools. Open in a browser and it just works.
 
