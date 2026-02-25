@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Active Seasonal Bans — Fisheries Resources Management</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="dashboard">
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-brand">
+      <svg class="fish-icon" viewBox="0 0 24 24">
+        <path d="M2 12C2 12 5 6 12 6C16 6 20 9 22 12C20 15 16 18 12 18C5 18 2 12 2 12Z"/>
+        <circle cx="15" cy="11" r="1"/>
+        <path d="M2 12 L0 8 L4 10 Z"/>
+      </svg>
+Marine Board    </div>
+
+    <ul class="nav-tabs">
+      <li><a href="index.html">Dashboard</a></li>
+      <li><a href="quotas.html">Quotas</a></li>
+      <li><a href="seasonal.html" class="active">Seasonal Bans</a></li>
+      <li><a href="alerts.html">Alerts</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <span><span class="live-dot"></span>Live — Feb 24, 2026</span>
+      <span>Zone: North Atlantic</span>
+      <div class="theme-toggle" id="themeToggle" title="Toggle light / dark theme">
+        <span class="toggle-icon">☀️</span>
+        <div class="toggle-track">
+          <div class="toggle-knob"></div>
+        </div>
+        <span class="toggle-icon">🌙</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE CONTENT -->
+  <div class="page-content">
+
+    <div class="top-bar">
+      <div class="page-title">Active Seasonal <span>Bans</span></div>
+      <div class="metric-strip">
+        <div class="glass metric-card">
+          <div class="metric-icon coral">🚫</div>
+          <div class="metric-data">
+            <div class="metric-label">Restricted Zones</div>
+            <div class="metric-value coral">2</div>
+            <div class="metric-delta">Full moratorium</div>
+          </div>
+        </div>
+        <div class="glass metric-card">
+          <div class="metric-icon amber">⚠️</div>
+          <div class="metric-data">
+            <div class="metric-label">Caution Zones</div>
+            <div class="metric-value amber">1</div>
+            <div class="metric-delta">Limited ops</div>
+          </div>
+        </div>
+        <div class="glass metric-card">
+          <div class="metric-icon jade">✅</div>
+          <div class="metric-data">
+            <div class="metric-label">Active Zones</div>
+            <div class="metric-value jade">4</div>
+            <div class="metric-delta">Open season</div>
+          </div>
+        </div>
+        <div class="glass metric-card">
+          <div class="metric-icon teal">📅</div>
+          <div class="metric-data">
+            <div class="metric-label">Next Lift</div>
+            <div class="metric-value teal" style="font-size:0.85rem;">Apr 15</div>
+            <div class="metric-delta">Norwegian Sea</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-main" style="display:grid;grid-template-columns:1.2fr 1fr;grid-template-rows:1fr 1fr;gap:12px;flex:1;overflow:hidden;">
+
+      <div class="glass" style="padding:16px;display:flex;flex-direction:column;gap:10px;overflow-y:auto;">
+        <div class="section-label">Zone Ban Status</div>
+        <div class="ban-detail-card restricted">
+          <div class="ban-detail-header">
+            <span class="ban-detail-name">🚫 Norwegian Sea</span>
+            <span class="ban-detail-badge restricted">RESTRICTED</span>
+          </div>
+          <div class="ban-detail-body">
+            <div class="ban-detail-row"><span>Reason</span><span>Cod spawning season</span></div>
+            <div class="ban-detail-row"><span>Lifts</span><span>April 15, 2026</span></div>
+            <div class="ban-detail-row"><span>Area</span><span>234,000 km²</span></div>
+            <div class="ban-detail-row"><span>Authority</span><span>ICES / Norway MFA</span></div>
+          </div>
+        </div>
+        <div class="ban-detail-card restricted">
+          <div class="ban-detail-header">
+            <span class="ban-detail-name">🔴 Grand Banks</span>
+            <span class="ban-detail-badge restricted">RESTRICTED</span>
+          </div>
+          <div class="ban-detail-body">
+            <div class="ban-detail-row"><span>Reason</span><span>Cod moratorium + TAC breach</span></div>
+            <div class="ban-detail-row"><span>TAC Exceeded</span><span>+18% daily excess</span></div>
+            <div class="ban-detail-row"><span>Vessel Limit</span><span>Max 12 active</span></div>
+            <div class="ban-detail-row"><span>Alert Level</span><span>ICES Level 2 — Critical</span></div>
+          </div>
+        </div>
+        <div class="ban-detail-card caution">
+          <div class="ban-detail-header">
+            <span class="ban-detail-name">⚠️ North Sea</span>
+            <span class="ban-detail-badge caution">CAUTION</span>
+          </div>
+          <div class="ban-detail-body">
+            <div class="ban-detail-row"><span>Reason</span><span>Cod spawning / Herring TAC near cap</span></div>
+            <div class="ban-detail-row"><span>Herring TAC</span><span>88% consumed</span></div>
+            <div class="ban-detail-row"><span>Restriction</span><span>Bottom trawling limited</span></div>
+            <div class="ban-detail-row"><span>Lifts</span><span>May 1, 2026</span></div>
+          </div>
+        </div>
+        <div class="ban-detail-card active">
+          <div class="ban-detail-header">
+            <span class="ban-detail-name">✅ Celtic Sea</span>
+            <span class="ban-detail-badge active">ACTIVE</span>
+          </div>
+          <div class="ban-detail-body">
+            <div class="ban-detail-row"><span>Season</span><span>Year-round open</span></div>
+            <div class="ban-detail-row"><span>Top Species</span><span>Mackerel, Herring, Hake</span></div>
+            <div class="ban-detail-row"><span>TAC Used</span><span>54% of annual TAC</span></div>
+            <div class="ban-detail-row"><span>Vessels</span><span>78 licensed active</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass chart-card" style="padding:16px;">
+        <div class="chart-title">Ban Duration Timeline — 2026</div>
+        <div class="chart-wrap">
+          <canvas id="banTimelineChart"></canvas>
+        </div>
+      </div>
+
+      <div class="glass chart-card" style="padding:16px;grid-column:2;">
+        <div class="chart-title">Zone Status Distribution</div>
+        <div class="chart-wrap" style="display:flex;gap:16px;align-items:center;">
+          <canvas id="banStatusChart" style="max-width:110px;max-height:110px;"></canvas>
+          <div id="banStatusLegend" style="font-size:0.65rem;display:flex;flex-direction:column;gap:6px;"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="dash-footer">
+      <span>© 2026 Fisheries Resources Management System</span>
+      <span>Seasonal bans — ICES / EU Commission framework · 2026</span>
+      <span>Enforcement: Coast Guard + VMS monitoring</span>
+    </div>
+
+  </div><!-- /page-content -->
+
+</div><!-- /dashboard -->
+
+<script src="main.js"></script>
+</body>
+</html>
