@@ -1,0 +1,169 @@
+/* ═══════════════════════════════════════════════════════════
+   ENHANCEMENTS.CSS  – additive only, never overwrites logic
+   ═══════════════════════════════════════════════════════════ */
+
+/* ──────────────────────────────────────────────────────────
+   1. CURSOR: pointer only on truly interactive (expandable)
+      elements. Reset classes that were broad-brushed.
+   ────────────────────────────────────────────────────────── */
+
+/* All glass metric cards default to normal – only clickable
+   ones (those with data-expand) get the hand cursor.        */
+.metric-card                      { cursor: default; }
+.metric-card[data-expand]         { cursor: pointer; }
+
+/* Activity-feed items are purely display – no expand target  */
+.activity-item                    { cursor: default; }
+
+/* Ban-detail rows on the seasonal page are display-only      */
+.ban-detail-row                   { cursor: default; }
+
+/* Chart cards: only show pointer when they carry an expand   */
+.chart-card                       { cursor: default; }
+.chart-card[data-expand]          { cursor: pointer; }
+
+/* Ring card and quota card already covered by [data-expand]  */
+.ring-card                        { cursor: default; }
+.ring-card[data-expand]           { cursor: pointer; }
+
+
+/* ──────────────────────────────────────────────────────────
+   2. DARK MODE — Chart visibility fixes
+      Chart.js renders on a <canvas> that sits inside
+      .chart-wrap.  In dark mode the chart elements can
+      become invisible because:
+        a) canvas background is transparent but the card bg
+           is nearly black, making very-dark dataset fills
+           impossible to see.
+        b) tick / grid colours are too dim.
+      Fix: give all chart-wrap canvases a faint translucent
+      background in dark mode so the chart areas "lift".
+   ────────────────────────────────────────────────────────── */
+
+/* Lift canvas area in dark mode */
+body.dark .chart-wrap canvas,
+body.dark .expand-chart-wrap canvas {
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Make the donut / polar legend text visible in dark mode   */
+body.dark canvas {
+  filter: none; /* ensure nothing dims the canvas itself    */
+}
+
+/* Boost contrast on all chart card backgrounds in dark mode */
+body.dark .chart-card {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* Ensure chart-wrap has a min height so canvas isn't 0px   */
+.chart-wrap {
+  min-height: 0;
+}
+
+
+/* ──────────────────────────────────────────────────────────
+   3. NAV-TAB TOOLTIP (hover mini-popup)
+      Each <a> in .nav-tabs gets a custom tooltip via a
+      ::after pseudo-element.  The text content is injected
+      via the data-tooltip attribute set by enhancements.js.
+   ────────────────────────────────────────────────────────── */
+
+/* Positioning anchor on the <li> wrapper */
+.nav-tabs li {
+  position: relative;
+}
+
+/* The tooltip bubble */
+.nav-tabs li .nav-tab-tooltip {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  z-index: 500;
+
+  /* sizing */
+  width: 200px;
+  padding: 9px 13px;
+
+  /* glass look — matches the rest of the UI */
+  background: rgba(255, 255, 255, 0.93);
+  backdrop-filter: blur(16px) saturate(1.8);
+  border: 1px solid rgba(0, 151, 167, 0.22);
+  border-radius: 10px;
+  box-shadow: 0 8px 28px rgba(0, 80, 100, 0.15),
+              0 2px 8px  rgba(0, 151, 167, 0.08);
+
+  /* typography */
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.65rem;
+  line-height: 1.5;
+  color: rgba(12, 37, 53, 0.75);
+  text-align: left;
+  pointer-events: none;
+
+  /* hidden by default */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.22s ease,
+              transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+              visibility 0.22s;
+}
+
+/* Small arrow pointing up toward the nav tab */
+.nav-tabs li .nav-tab-tooltip::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid rgba(0, 151, 167, 0.22);
+}
+.nav-tabs li .nav-tab-tooltip::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid rgba(255, 255, 255, 0.93);
+}
+
+/* Title line inside tooltip */
+.nav-tabs li .nav-tab-tooltip .tt-title {
+  font-weight: 700;
+  font-size: 0.70rem;
+  color: var(--teal);
+  margin-bottom: 4px;
+  display: block;
+  letter-spacing: 0.01em;
+}
+
+/* Reveal on hover */
+.nav-tabs li:hover .nav-tab-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── Dark mode overrides for the tooltip ── */
+body.dark .nav-tabs li .nav-tab-tooltip {
+  background: rgba(4, 28, 53, 0.96);
+  border-color: rgba(0, 212, 200, 0.22);
+  color: rgba(232, 244, 248, 0.75);
+  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.45),
+              0 2px 8px rgba(0, 212, 200, 0.06);
+}
+body.dark .nav-tabs li .nav-tab-tooltip::before {
+  border-bottom-color: rgba(0, 212, 200, 0.22);
+}
+body.dark .nav-tabs li .nav-tab-tooltip::after {
+  border-bottom-color: rgba(4, 28, 53, 0.96);
+}
+body.dark .nav-tabs li .nav-tab-tooltip .tt-title {
+  color: var(--teal); /* --teal is already remapped in dark mode */
+}
