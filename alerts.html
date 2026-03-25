@@ -1,156 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Active Overfishing Alerts — Fisheries Resources Management</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Active Overfishing Alerts — Fisheries Resources Management</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="dashboard">
+  <div class="dashboard">
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-brand">
-      <svg class="fish-icon" viewBox="0 0 24 24">
-        <path d="M2 12C2 12 5 6 12 6C16 6 20 9 22 12C20 15 16 18 12 18C5 18 2 12 2 12Z"/>
-        <circle cx="15" cy="11" r="1"/>
-        <path d="M2 12 L0 8 L4 10 Z"/>
-      </svg>
-      Marine Board
-    </div>
-
-    <ul class="nav-tabs">
-      <li><a href="index.html">Dashboard</a></li>
-      <li><a href="quotas.html">Quotas</a></li>
-      <li><a href="seasonal.html">Seasonal Bans</a></li>
-      <li><a href="alerts.html" class="active">Alerts</a></li>
-    </ul>
-
-    <div class="nav-right">
-      <span><span class="live-dot"></span>Live — Feb 24, 2026</span>
-      <span>Zone: North Atlantic</span>
-      <div class="theme-toggle" id="themeToggle" title="Toggle light / dark theme">
-        <span class="toggle-icon">☀️</span>
-        <div class="toggle-track">
-          <div class="toggle-knob"></div>
-        </div>
-        <span class="toggle-icon">🌙</span>
-      </div>
-    </div>
-  </nav>
-
-  <!-- PAGE CONTENT -->
-  <div class="page-content">
-
-    <div class="top-bar">
-      <div class="page-title">Active Overfishing <span>Alerts</span></div>
-      <div class="metric-strip">
-        <div class="glass metric-card">
-          <div class="metric-icon coral">🚨</div>
-          <div class="metric-data">
-            <div class="metric-label">Total Alerts</div>
-            <div class="metric-value coral">3</div>
-            <div class="metric-delta">Active now</div>
-          </div>
-        </div>
-        <div class="glass metric-card">
-          <div class="metric-icon coral">⛔</div>
-          <div class="metric-data">
-            <div class="metric-label">Critical</div>
-            <div class="metric-value coral">2</div>
-            <div class="metric-delta">Immediate action</div>
-          </div>
-        </div>
-        <div class="glass metric-card">
-          <div class="metric-icon amber">⚠️</div>
-          <div class="metric-data">
-            <div class="metric-label">Warning</div>
-            <div class="metric-value amber">1</div>
-            <div class="metric-delta">Monitor closely</div>
-          </div>
-        </div>
-        <div class="glass metric-card">
-          <div class="metric-icon jade">ℹ️</div>
-          <div class="metric-data">
-            <div class="metric-label">Info</div>
-            <div class="metric-value jade">1</div>
-            <div class="metric-delta">Advisory only</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="sub-main" style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:12px;flex:1;overflow:hidden;">
-
-      <div class="glass chart-card" style="padding:16px;">
-        <div class="chart-title">Alert History — Last 30 Days</div>
-        <div class="chart-wrap">
-          <canvas id="alertHistoryChart"></canvas>
-        </div>
+    <!-- NAV -->
+    <nav>
+      <div class="nav-brand">
+        <svg class="fish-icon" viewBox="0 0 24 24">
+          <path d="M2 12C2 12 5 6 12 6C16 6 20 9 22 12C20 15 16 18 12 18C5 18 2 12 2 12Z" />
+          <circle cx="15" cy="11" r="1" />
+          <path d="M2 12 L0 8 L4 10 Z" />
+        </svg>
+        Marine Board
       </div>
 
-      <div class="glass" style="padding:16px;display:flex;flex-direction:column;gap:8px;">
-        <div class="section-label">Active Incident Log</div>
-        <div class="alert-item critical" style="cursor:default;">
-          <div class="alert-badge critical"></div>
-          <div class="alert-text">
-            <div class="alert-title">Atlantic Cod — Grand Banks exceeding TAC by 18%</div>
-            <div class="alert-time">Feb 24, 2026 · 06:12 UTC · Zone 1 · ICES Level 2</div>
+      <ul class="nav-tabs">
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="quotas.html">Quotas</a></li>
+        <li><a href="seasonal.html">Seasonal Bans</a></li>
+        <li><a href="alerts.html" class="active">Alerts</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <span><span class="live-dot"></span>Live — Feb 24, 2026</span>
+        <span>Zone: North Atlantic</span>
+        <div class="theme-toggle" id="themeToggle" title="Toggle light / dark theme">
+          <span class="toggle-icon">☀️</span>
+          <div class="toggle-track">
+            <div class="toggle-knob"></div>
           </div>
+          <span class="toggle-icon">🌙</span>
         </div>
-        <div class="alert-item critical" style="cursor:default;">
-          <div class="alert-badge critical"></div>
-          <div class="alert-text">
-            <div class="alert-title">Norwegian Sea vessel density above threshold (+35%)</div>
-            <div class="alert-time">Feb 24, 2026 · 04:18 UTC · Zone 5 · Protocol Active</div>
+      </div>
+    </nav>
+
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
+
+      <div class="top-bar">
+        <div class="page-title">Active Overfishing <span>Alerts</span></div>
+        <div class="metric-strip">
+          <div class="glass metric-card">
+            <div class="metric-icon coral">🚨</div>
+            <div class="metric-data">
+              <div class="metric-label">Total Alerts</div>
+              <div class="metric-value coral">3</div>
+              <div class="metric-delta">Active now</div>
+            </div>
           </div>
-        </div>
-        <div class="alert-item warning" style="cursor:default;">
-          <div class="alert-badge warning"></div>
-          <div class="alert-text">
-            <div class="alert-title">North Sea herring quota 88% consumed</div>
-            <div class="alert-time">Feb 24, 2026 · 02:45 UTC · Zone 6 · Monitor</div>
+          <div class="glass metric-card">
+            <div class="metric-icon coral">⛔</div>
+            <div class="metric-data">
+              <div class="metric-label">Critical</div>
+              <div class="metric-value coral">2</div>
+              <div class="metric-delta">Immediate action</div>
+            </div>
           </div>
-        </div>
-        <div class="alert-item info" style="cursor:default;">
-          <div class="alert-badge info"></div>
-          <div class="alert-text">
-            <div class="alert-title">Mackerel population survey — updated TAC issued</div>
-            <div class="alert-time">Feb 23, 2026 · 09:00 UTC · All Zones · Advisory</div>
+          <div class="glass metric-card">
+            <div class="metric-icon amber">⚠️</div>
+            <div class="metric-data">
+              <div class="metric-label">Warning</div>
+              <div class="metric-value amber">1</div>
+              <div class="metric-delta">Monitor closely</div>
+            </div>
+          </div>
+          <div class="glass metric-card">
+            <div class="metric-icon jade">ℹ️</div>
+            <div class="metric-data">
+              <div class="metric-label">Info</div>
+              <div class="metric-value jade">1</div>
+              <div class="metric-delta">Advisory only</div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="glass chart-card" style="padding:16px;">
-        <div class="chart-title">Alerts by Zone — Frequency</div>
-        <div class="chart-wrap">
-          <canvas id="alertZoneChart"></canvas>
+      <div class="sub-main"
+        style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:12px;flex:1;overflow:hidden;">
+
+        <div class="glass chart-card" style="padding:16px;">
+          <div class="chart-title">Alert History — Last 30 Days</div>
+          <div class="chart-wrap">
+            <canvas id="alertHistoryChart"></canvas>
+          </div>
         </div>
+
+        <div class="glass" style="padding:16px;display:flex;flex-direction:column;gap:8px;">
+          <div class="section-label">Active Incident Log</div>
+          <div class="alert-item critical" style="cursor:default;">
+            <div class="alert-badge critical"></div>
+            <div class="alert-text">
+              <div class="alert-title">Atlantic Cod — Grand Banks exceeding TAC by 18%</div>
+              <div class="alert-time">Feb 24, 2026 · 06:12 UTC · Zone 1 · ICES Level 2</div>
+            </div>
+          </div>
+          <div class="alert-item critical" style="cursor:default;">
+            <div class="alert-badge critical"></div>
+            <div class="alert-text">
+              <div class="alert-title">Norwegian Sea vessel density above threshold (+35%)</div>
+              <div class="alert-time">Feb 24, 2026 · 04:18 UTC · Zone 5 · Protocol Active</div>
+            </div>
+          </div>
+          <div class="alert-item warning" style="cursor:default;">
+            <div class="alert-badge warning"></div>
+            <div class="alert-text">
+              <div class="alert-title">North Sea herring quota 88% consumed</div>
+              <div class="alert-time">Feb 24, 2026 · 02:45 UTC · Zone 6 · Monitor</div>
+            </div>
+          </div>
+          <div class="alert-item info" style="cursor:default;">
+            <div class="alert-badge info"></div>
+            <div class="alert-text">
+              <div class="alert-title">Mackerel population survey — updated TAC issued</div>
+              <div class="alert-time">Feb 23, 2026 · 09:00 UTC · All Zones · Advisory</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass chart-card" style="padding:16px;">
+          <div class="chart-title">Alerts by Zone — Frequency</div>
+          <div class="chart-wrap">
+            <canvas id="alertZoneChart"></canvas>
+          </div>
+        </div>
+
+        <div class="glass chart-card" style="padding:16px;">
+          <div class="chart-title">Risk Index Trend — Weekly</div>
+          <div class="chart-wrap">
+            <canvas id="alertRiskChart"></canvas>
+          </div>
+        </div>
+
       </div>
 
-      <div class="glass chart-card" style="padding:16px;">
-        <div class="chart-title">Risk Index Trend — Weekly</div>
-        <div class="chart-wrap">
-          <canvas id="alertRiskChart"></canvas>
-        </div>
+      <div class="dash-footer">
+        <span>© 2026 Fisheries Resources Management System</span>
+        <span>Monitoring: AIS + VMS real-time · ICES Alert Framework</span>
+        <span>Last updated: Feb 24, 2026 08:30 UTC</span>
       </div>
 
-    </div>
+    </div><!-- /page-content -->
 
-    <div class="dash-footer">
-      <span>© 2026 Fisheries Resources Management System</span>
-      <span>Monitoring: AIS + VMS real-time · ICES Alert Framework</span>
-      <span>Last updated: Feb 24, 2026 08:30 UTC</span>
-    </div>
+  </div><!-- /dashboard -->
 
-  </div><!-- /page-content -->
-
-</div><!-- /dashboard -->
-
-<script src="main.js"></script>
+  <script src="main.js"></script>
 </body>
+
 </html>
