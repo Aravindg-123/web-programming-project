@@ -1,3 +1,21 @@
+// ═══════════════════════════════════════════════════════════════
+// API LAYER — connects to server.js when served via HTTP
+// Falls back silently to hardcoded data when running as file://
+// ═══════════════════════════════════════════════════════════════
+const API_BASE = window.location.protocol === 'file:'
+  ? null   // running as file:// — use hardcoded FALLBACK data
+  : (window.location.origin || 'http://localhost:3000');
+const USE_API = API_BASE !== null;
+
+/**
+ * Loading indicator — dims metric-value elements while API fetches are in flight.
+ * CSS rule for .loading is in enhancements.css: .metric-value.loading { opacity: 0.35; }
+ */
+function setLoading(on) {
+  document.querySelectorAll('.metric-value')
+    .forEach(el => el.classList.toggle('loading', on));
+}
+
 // ─── THEME TOGGLE ────────────────────────────────────────
 const themeToggle = document.getElementById('themeToggle');
 let isDark = false;
@@ -25,7 +43,14 @@ const ON_SEASONAL = !!document.getElementById('banTimelineChart');
 const ON_DASHBOARD = !!document.getElementById('barChart');
 
 // ─── DATA ────────────────────────────────────────────────
-const species = [
+// FALLBACK — served when backend is unavailable
+// Replace by running: npm start
+// Real data file: /data/dummy/species.json → /data/raw/cmfri-species-landings.csv
+// DATA SOURCE: /api/species
+// Real dataset: DS2 — CMFRI Species-wise Landings
+// Access pattern: B (CSV file)
+// Real source: https://eprints.cmfri.org.in
+let species = [
   { name: 'Atlantic Cod', pct: 91, color: '#e53935', quota: 1200, catch: 1092 },
   { name: 'Herring', pct: 88, color: '#d4900a', quota: 2100, catch: 1848 },
   { name: 'Mackerel', pct: 72, color: '#0097a7', quota: 1800, catch: 1296 },
@@ -37,7 +62,13 @@ const species = [
   { name: 'Sole', pct: 29, color: '#6a1b9a', quota: 300, catch: 87 },
 ];
 
-const activities = [
+// FALLBACK — served when backend is unavailable
+// Real data file: /data/dummy/alerts.json → /data/manual/alerts.json
+// DATA SOURCE: /api/alerts
+// Real dataset: DS6 — IMD Fishermen Warnings
+// Access pattern: C (manual JSON)
+// Real source: https://mausam.imd.gov.in
+let activities = [
   { col: '#e53935', title: 'CRITICAL: Cod catch exceeds daily limit — Zone 1', time: '2 min ago' },
   { col: '#d4900a', title: 'Vessel MV Nordic entered restricted zone', time: '14 min ago' },
   { col: '#2e7d32', title: 'Quota update issued for Mackerel — Zone 4', time: '31 min ago' },
@@ -49,6 +80,14 @@ const activities = [
   { col: '#2e7d32', title: 'Q4 2025 report submitted to ICES', time: '1 day ago' },
   { col: '#d4900a', title: 'Capelin season opened — Iceland Waters', time: '2 days ago' },
 ];
+
+// ─── MODULE-LEVEL DATA STORE (overwritten by loadAllData) ────
+// Chart functions read from _appData when available, otherwise use
+// the hardcoded FALLBACK arrays above.
+let _appData = {};
+
+// Helper: safe-get fetched data or return null
+function _get(key) { return _appData[key] || null; }
 
 // ─── SPECIES LIST ────────────────────────────────────────
 const speciesList = document.getElementById('species-list');
@@ -256,8 +295,9 @@ function initCharts() {
   });
 }
 
-// Only init dashboard charts when on the dashboard page
-if (ON_DASHBOARD) initCharts();
+// Dashboard charts are initialised inside loadAllData().then() below,
+// so fetched data is available before charts are built.
+// (Previously: if (ON_DASHBOARD) initCharts(); — moved to async init block)
 
 // ─── SUB-PAGE: QUOTAS ────────────────────────────────────
 function initQuotaCharts() {
@@ -465,10 +505,130 @@ function initSeasonalCharts() {
   });
 }
 
+// ═══════════════════════════════════════════════════════════════
+// loadAllData — fetches all API endpoints with Promise.allSettled()
+// so ONE failing endpoint never blanks the whole dashboard.
+// Falls back to hardcoded data for any rejected promise.
+// ═══════════════════════════════════════════════════════════════
+async function loadAllData() {
+  if (!USE_API) {
+    // Running as file:// — use hardcoded fallbacks unchanged
+    return;
+  }
+
+  setLoading(true);
+
+  const endpoints = [
+    // DATA SOURCE: /api/species
+    // Real dataset: DS2 — CMFRI Species-wise Landings | Access pattern: B
+    // Real source: https://eprints.cmfri.org.in
+    fetch(API_BASE + '/api/species').then(r => r.json()).then(d => ({ key: 'species', data: d })),
+
+    // DATA SOURCE: /api/alerts
+    // Real dataset: DS6 — IMD Fishermen Warnings | Access pattern: C
+    // Real source: https://mausam.imd.gov.in
+    fetch(API_BASE + '/api/alerts').then(r => r.json()).then(d => ({ key: 'alerts', data: d })),
+
+    // DATA SOURCE: /api/kpis
+    // Real dataset: DS1 — DoF Year-wise Fish Production | Access pattern: A
+    // Real source: https://www.data.gov.in (requires DATAGOVIN_API_KEY in .env)
+    fetch(API_BASE + '/api/kpis').then(r => r.json()).then(d => ({ key: 'kpis', data: d })),
+
+    // DATA SOURCE: /api/catch-monthly
+    // Real dataset: NEW-2 — CMFRI Monthly Flash Bulletin | Access pattern: B
+    // Real source: https://cmfri.org.in/publications
+    fetch(API_BASE + '/api/catch-monthly').then(r => r.json()).then(d => ({ key: 'catchMonthly', data: d })),
+
+    // DATA SOURCE: /api/alert-history
+    // Real dataset: NEW-5 — INCOIS Fishwatch | Access pattern: C
+    // Real source: https://fishwatch.incois.gov.in
+    fetch(API_BASE + '/api/alert-history').then(r => r.json()).then(d => ({ key: 'alertHistory', data: d })),
+
+    // DATA SOURCE: /api/risk-index
+    // Real dataset: NEW-4 — Derived INCOIS+IMD score | Access pattern: C
+    // Real source: https://incois.gov.in/portal/pfz/pfz.jsp
+    fetch(API_BASE + '/api/risk-index').then(r => r.json()).then(d => ({ key: 'riskIndex', data: d })),
+
+    // DATA SOURCE: /api/catch-breakdown
+    // Real dataset: DS2 — CMFRI species-group proportions | Access pattern: B
+    // Real source: https://eprints.cmfri.org.in
+    fetch(API_BASE + '/api/catch-breakdown').then(r => r.json()).then(d => ({ key: 'catchBreakdown', data: d })),
+
+    // DATA SOURCE: /api/fleet
+    // Real dataset: DS7 — DoF Vessel Census | Access pattern: B
+    // Real source: https://dof.gov.in/statistics
+    fetch(API_BASE + '/api/fleet').then(r => r.json()).then(d => ({ key: 'fleet', data: d })),
+
+    // DATA SOURCE: /api/biomass-trend
+    // Real dataset: NEW-1 — CMFRI Annual Report | Access pattern: C
+    // Real source: https://eprints.cmfri.org.in
+    fetch(API_BASE + '/api/biomass-trend').then(r => r.json()).then(d => ({ key: 'biomassTrend', data: d })),
+
+    // DATA SOURCE: /api/ocean-conditions
+    // Real dataset: NEW-3 — Open-Meteo Marine (INCOIS OSF fallback) | Access pattern: A
+    // Real source: https://incois.gov.in/portal/osf/osf.jsp
+    fetch(API_BASE + '/api/ocean-conditions').then(r => r.json()).then(d => ({ key: 'oceanConditions', data: d })),
+  ];
+
+  const results = await Promise.allSettled(endpoints);
+
+  results.forEach(result => {
+    if (result.status === 'fulfilled') {
+      const { key, data } = result.value;
+      _appData[key] = data;
+      // Overwrite species/activities module-level vars if fetched
+      if (key === 'species' && Array.isArray(data.data || data)) {
+        const arr = data.data || data;
+        // Map API format → internal format used by chart functions
+        species = arr.map(s => ({
+          name:  s.name,
+          pct:   s.percent,
+          color: s.color,
+          quota: s.quota,
+          catch: s.caught,
+        }));
+      }
+      if (key === 'alerts' && Array.isArray(data.data || data)) {
+        const arr = data.data || data;
+        activities = arr.map(a => ({
+          col:   a.severity === 'critical' ? '#e53935' : a.severity === 'warning' ? '#d4900a' : '#0097a7',
+          title: a.title,
+          time:  new Date(a.timestamp).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) + ' IST',
+        }));
+      }
+    } else {
+      console.warn('[loadAllData] endpoint failed:', result.reason.message, '— using hardcoded fallback');
+    }
+  });
+
+  setLoading(false);
+}
+
 // ─── AUTO-INIT SUB-PAGE CHARTS ───────────────────────────
-if (ON_QUOTAS) initQuotaCharts();
-if (ON_ALERTS) initAlertCharts();
-if (ON_SEASONAL) initSeasonalCharts();
+// Charts are initialised after loadAllData() resolves so they
+// use fetched data when the backend is available.
+loadAllData().then(() => {
+  if (ON_QUOTAS)   initQuotaCharts();
+  if (ON_ALERTS)   initAlertCharts();
+  if (ON_SEASONAL) initSeasonalCharts();
+  if (ON_DASHBOARD) {
+    // Re-render species list and activity feed with (possibly updated) data
+    const sl = document.getElementById('species-list');
+    if (sl) sl.innerHTML = '';
+    const feedEl = document.getElementById('activityFeed');
+    if (feedEl) feedEl.innerHTML = '';
+    // Re-run species list render (defined after this function in file)
+    if (typeof _renderSpeciesList === 'function') _renderSpeciesList();
+    if (typeof _renderActivityFeed === 'function') _renderActivityFeed();
+    initCharts();
+  }
+}).catch(err => {
+  console.error('[loadAllData] unexpected error:', err);
+  if (ON_QUOTAS)   initQuotaCharts();
+  if (ON_ALERTS)   initAlertCharts();
+  if (ON_SEASONAL) initSeasonalCharts();
+  if (ON_DASHBOARD) initCharts();
+});
 
 // ─── MAP THEME ────────────────────────────────────────────
 function updateMapTheme() {

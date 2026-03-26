@@ -1,0 +1,15 @@
+{
+  "__meta": {
+    "dataType": "DUMMY — replace with real data",
+    "realDataset": "NEW-3 — INCOIS Ocean State Forecast (OSF) via Open-Meteo Marine API fallback",
+    "realSourceUrl": "https://incois.gov.in/portal/osf/osf.jsp",
+    "dataAccessPattern": "A — Open-Meteo Marine API (free, no key needed). Upgrade to INCOIS OSF when API access granted. Contact: incois@incois.gov.in",
+    "updateFrequency": "Live — 3-hour cache",
+    "fieldMapping": "seaTemp ← sea_surface_temperature[0], waveHeight ← wave_height[0], windSpeed ← wind_speed_10m[0]"
+  },
+  "seaTemp": 28.4,
+  "waveHeight": 1.2,
+  "windSpeed": 18,
+  "windDirection": "SW",
+  "zone": "Bay of Bengal"
+}

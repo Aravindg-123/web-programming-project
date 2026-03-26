@@ -1,0 +1,9 @@
+# Place your CSV data files here.
+# server.js will auto-detect these files on startup.
+#
+# Required files:
+#   cmfri-species-landings.csv  — /api/species, /api/catch-breakdown
+#   cmfri-monthly-catch.csv     — /api/catch-monthly
+#   dof-vessel-census.csv       — /api/fleet, /api/kpis (vesselsAtSea field)
+#
+# See DATASETS.md for download instructions.

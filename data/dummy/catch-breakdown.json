@@ -1,0 +1,14 @@
+{
+  "__meta": {
+    "dataType": "DUMMY — replace with real data",
+    "realDataset": "DS2 — CMFRI species-group catch proportions (derived from species landings CSV)",
+    "realSourceUrl": "https://eprints.cmfri.org.in",
+    "dataAccessPattern": "B — Derived from species landings CSV (same file as /api/species: /data/raw/cmfri-species-landings.csv)",
+    "updateFrequency": "Annually",
+    "fieldMapping": "pelagic ← Sardine+Mackerel+Anchovy groups, demersal ← Ribbonfish+Catfish+Croaker, shellfish ← Shrimp+Crab"
+  },
+  "pelagic": 57,
+  "demersal": 24,
+  "shellfish": 13,
+  "other": 6
+}

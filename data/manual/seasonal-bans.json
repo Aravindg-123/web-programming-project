@@ -1,0 +1,80 @@
+{
+  "__meta": {
+    "dataType": "MANUAL-DUMMY — update with real gazette values before April each year",
+    "realDataset": "DS4 — DoF Seasonal Trawling Ban (Gazette Notification)",
+    "realSourceUrl": "https://dof.gov.in/statistics",
+    "dataAccessPattern": "C — Manual entry. Updated once per year before April.",
+    "updateFrequency": "Annually (before April — when ban orders are issued)",
+    "howToUpdate": "Check dof.gov.in for the annual ban gazette notification. Replace startDay/endDay/lifts with the official dates. Change dataType to MANUAL-LIVE."
+  },
+  "data": [
+    {
+      "zone": "East Coast",
+      "states": ["Odisha", "Andhra Pradesh", "Tamil Nadu", "Puducherry", "West Bengal"],
+      "startMonth": 4,
+      "startDay": 15,
+      "endMonth": 6,
+      "endDay": 14,
+      "durationDays": 61,
+      "status": "restricted",
+      "reason": "Monsoon trawl ban — fish spawning protection (East Coast)",
+      "lifts": "June 15, 2026",
+      "area": "860,000 km²",
+      "authority": "Ministry of Fisheries, Animal Husbandry & Dairying — Gazette SO 1568(E)"
+    },
+    {
+      "zone": "West Coast",
+      "states": ["Gujarat", "Maharashtra", "Goa", "Karnataka", "Kerala"],
+      "startMonth": 6,
+      "startDay": 1,
+      "endMonth": 7,
+      "endDay": 31,
+      "durationDays": 61,
+      "status": "restricted",
+      "reason": "Monsoon trawl ban — fish spawning protection (West Coast)",
+      "lifts": "August 1, 2026",
+      "area": "1,020,000 km²",
+      "authority": "Ministry of Fisheries, Animal Husbandry & Dairying — Gazette SO 1568(E)"
+    },
+    {
+      "zone": "Bay of Bengal",
+      "startMonth": null,
+      "endMonth": null,
+      "status": "active",
+      "reason": "Open season — normal operations",
+      "lifts": null,
+      "area": "2,172,000 km²",
+      "authority": "BOBP-IGO"
+    },
+    {
+      "zone": "Lakshadweep Sea",
+      "startMonth": null,
+      "endMonth": null,
+      "status": "active",
+      "reason": "Open season — sustainable operations",
+      "lifts": null,
+      "area": "400,000 km²",
+      "authority": "Lakshadweep UT Administration"
+    },
+    {
+      "zone": "Andaman Sea",
+      "startMonth": null,
+      "endMonth": null,
+      "status": "active",
+      "reason": "Open season — tuna and pelagic",
+      "lifts": null,
+      "area": "600,000 km²",
+      "authority": "A&N Administration"
+    },
+    {
+      "zone": "Arabian Sea (Outer)",
+      "startMonth": null,
+      "endMonth": null,
+      "status": "active",
+      "reason": "Beyond 12 NM — open for deep-sea vessels",
+      "lifts": null,
+      "area": "1,200,000 km²",
+      "authority": "INCOIS / MoFAH&D"
+    }
+  ]
+}

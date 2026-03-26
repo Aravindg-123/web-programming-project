@@ -167,3 +167,14 @@ body.dark .nav-tabs li .nav-tab-tooltip::after {
 body.dark .nav-tabs li .nav-tab-tooltip .tt-title {
   color: var(--teal); /* --teal is already remapped in dark mode */
 }
+
+/* ──────────────────────────────────────────────────────────
+   4. API LOADING STATE
+      .metric-value.loading — applied by setLoading(true) in
+      main.js while API fetch is in flight. Dims values so
+      the user knows data is updating.
+   ────────────────────────────────────────────────────────── */
+.metric-value.loading {
+  opacity: 0.35;
+  transition: opacity 0.2s ease;
+}

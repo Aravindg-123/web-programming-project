@@ -1,0 +1,25 @@
+{
+  "__meta": {
+    "dataType": "MANUAL-DUMMY — manually tally from INCOIS Fishwatch portal",
+    "realDataset": "NEW-5 — INCOIS Fishwatch Advisory Archive",
+    "realSourceUrl": "https://fishwatch.incois.gov.in",
+    "dataAccessPattern": "C — Manual weekly tally from Fishwatch portal advisory history by date range.",
+    "updateFrequency": "Weekly",
+    "howToUpdate": "Visit fishwatch.incois.gov.in. Select date range for each week (Mon–Sun). Count advisories by severity. Append new { week, critical, warning, info } entry. Change dataType to MANUAL-LIVE."
+  },
+  "data": [
+    { "week": "W1",  "critical": 1, "warning": 2, "info": 1 },
+    { "week": "W2",  "critical": 0, "warning": 1, "info": 2 },
+    { "week": "W3",  "critical": 2, "warning": 1, "info": 0 },
+    { "week": "W4",  "critical": 1, "warning": 3, "info": 1 },
+    { "week": "W5",  "critical": 0, "warning": 2, "info": 2 },
+    { "week": "W6",  "critical": 1, "warning": 1, "info": 3 },
+    { "week": "W7",  "critical": 2, "warning": 0, "info": 1 },
+    { "week": "W8",  "critical": 0, "warning": 2, "info": 2 },
+    { "week": "W9",  "critical": 1, "warning": 1, "info": 1 },
+    { "week": "W10", "critical": 2, "warning": 1, "info": 0 },
+    { "week": "W11", "critical": 1, "warning": 2, "info": 1 },
+    { "week": "W12", "critical": 0, "warning": 1, "info": 2 },
+    { "week": "W13", "critical": 2, "warning": 1, "info": 1 }
+  ]
+}
