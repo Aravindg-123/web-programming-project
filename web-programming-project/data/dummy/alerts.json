@@ -1,0 +1,48 @@
+{
+  "__meta": {
+    "dataType": "DUMMY — replace with real data",
+    "realDataset": "DS6 — IMD Fishermen Warnings (mausam.imd.gov.in)",
+    "realSourceUrl": "https://mausam.imd.gov.in/imd_latest/contents/index_fisherman.php",
+    "dataAccessPattern": "C — Manual sync from IMD bulletin page (no machine-readable API exists). Updated daily during monsoon, weekly otherwise.",
+    "updateFrequency": "Daily during monsoon (Jun–Sep), weekly otherwise",
+    "fieldMapping": "title from IMD bulletin text, zone from coastal area, severity from colour code"
+  },
+  "data": [
+    {
+      "id": "ALT-001",
+      "title": "Indian Mackerel — Arabian Sea exceeding sustainable catch rate by 14%",
+      "severity": "critical",
+      "zone": "Arabian Sea",
+      "timestamp": "2026-03-26T07:00:00+05:30",
+      "protocol": "INCOIS PFZ Advisory — Vessel limit enforced in sectors 7–9",
+      "detail": "Oil Sardine and Indian Mackerel TAC 82% consumed with 6 weeks remaining in season. Precautionary quota freeze in effect. Ref: CMFRI Bulletin WK-11-2026."
+    },
+    {
+      "id": "ALT-002",
+      "title": "Bay of Bengal trawl ban in effect — pre-monsoon closure period approaching",
+      "severity": "critical",
+      "zone": "Bay of Bengal",
+      "timestamp": "2026-03-25T15:30:00+05:30",
+      "protocol": "DoF Circular No. F.No.11013/12/2024-Fy (3) — April 15 ban commencement",
+      "detail": "East Coast monsoon trawl ban commences April 15, 2026 and continues through June 14, 2026. All mechanised trawlers must vacate the 0–200 NM EEZ. Traditional craft &gt;15m LOA exempted in 0–5 NM zone only."
+    },
+    {
+      "id": "ALT-003",
+      "title": "Oil Sardine quota 82% consumed — North Kerala zone monitor",
+      "severity": "warning",
+      "zone": "Lakshadweep Sea",
+      "timestamp": "2026-03-25T09:00:00+05:30",
+      "protocol": "CMFRI Alert Level 1 — Increased monitoring deployed",
+      "detail": "Oil Sardine (Sardinella longiceps) catch in North Kerala (Kasaragod–Kozhikode) at 82% of seasonal TAC. If pace continues, cap will be reached by April 2. CMFRI recommends 20% reduction in directed Oil Sardine effort."
+    },
+    {
+      "id": "ALT-004",
+      "title": "Cyclone advisory: Tamil Nadu coast — all fishing vessels recalled",
+      "severity": "critical",
+      "zone": "East Coast EEZ",
+      "timestamp": "2026-03-24T18:00:00+05:30",
+      "protocol": "IMD Cyclone Warning Stage 1 — All vessels within 100 km of coast recalled",
+      "detail": "IMD has issued a depression advisory over the southwest Bay of Bengal. Wind speeds 45–55 kmph expected along Tamil Nadu and Puducherry coasts. All fishing vessels advised to return to harbour immediately. No fishing operations until advisory lifted."
+    }
+  ]
+}

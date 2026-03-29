@@ -1,0 +1,19 @@
+{
+  "__meta": {
+    "dataType": "MANUAL-DUMMY — extract from CMFRI Annual Marine Fisheries Report PDF",
+    "realDataset": "NEW-1 — CMFRI Annual Marine Fisheries Publication",
+    "realSourceUrl": "https://eprints.cmfri.org.in (search: Annual Marine Fisheries)",
+    "dataAccessPattern": "C — Manual extract from annual PDF report. Table: 'Year-wise production and stock status'.",
+    "updateFrequency": "Annually (after CMFRI annual report release, typically Q3)",
+    "howToUpdate": "Open CMFRI annual report PDF. Find 'Year-wise production' table. Extract biomass index column. Update data array. Change dataType to MANUAL-LIVE."
+  },
+  "data": [
+    { "year": 2020, "value": 71 },
+    { "year": 2021, "value": 73 },
+    { "year": 2022, "value": 74 },
+    { "year": 2023, "value": 76 },
+    { "year": 2024, "value": 76 },
+    { "year": 2025, "value": 78 },
+    { "year": 2026, "value": 78 }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "__meta": {
+    "dataType": "MANUAL-DUMMY — update with real values from DoF gazette + FSI GIS",
+    "realDataset": "DS4 + DS5 — DoF Seasonal Ban Gazette + FSI EEZ Zone Definitions",
+    "realSourceUrl": "https://dof.gov.in/statistics | https://fsi.gov.in/database",
+    "dataAccessPattern": "C — Manual entry",
+    "updateFrequency": "Annually",
+    "howToUpdate": "Open this file, replace dummy values with official figures, change dataType to MANUAL-LIVE"
+  },
+  "data": [
+    {
+      "id": "bay-of-bengal",
+      "name": "Bay of Bengal",
+      "status": "active",
+      "tacPercent": 68,
+      "vessels": 3200,
+      "description": "Primary fishing ground — East Coast. High sardine and mackerel activity.",
+      "lifts": null,
+      "area": "2,172,000 km²",
+      "reason": "Normal operations",
+      "authority": "CMFRI / BOBP-IGO",
+      "lat": 15.0,
+      "lon": 87.5
+    },
+    {
+      "id": "arabian-sea",
+      "name": "Arabian Sea",
+      "status": "caution",
+      "tacPercent": 83,
+      "vessels": 2800,
+      "description": "West Coast primary zone. Pre-monsoon ban advisory active.",
+      "lifts": null,
+      "area": "3,862,000 km²",
+      "reason": "Mackerel quota approaching cap",
+      "authority": "CMFRI / INCOIS",
+      "lat": 12.5,
+      "lon": 66.5
+    },
+    {
+      "id": "east-coast-eez",
+      "name": "East Coast EEZ",
+      "status": "active",
+      "tacPercent": 61,
+      "vessels": 1800,
+      "description": "India's East Coast Exclusive Economic Zone — 200 NM offshore.",
+      "lifts": null,
+      "area": "860,000 km²",
+      "reason": "Normal operations",
+      "authority": "MoFAH&D",
+      "lat": 14.0,
+      "lon": 81.5
+    },
+    {
+      "id": "west-coast-eez",
+      "name": "West Coast EEZ",
+      "status": "restricted",
+      "tacPercent": 91,
+      "vessels": 800,
+      "description": "Monsoon trawl ban in effect Jun 1–Jul 31.",
+      "lifts": "August 1, 2026",
+      "area": "1,020,000 km²",
+      "reason": "Monsoon trawl ban — fish spawning protection",
+      "authority": "MoFAH&D",
+      "lat": 13.0,
+      "lon": 72.0
+    },
+    {
+      "id": "lakshadweep-sea",
+      "name": "Lakshadweep Sea",
+      "status": "active",
+      "tacPercent": 42,
+      "vessels": 400,
+      "description": "Coral reef associated fisheries — sustainable low-intensity zone.",
+      "lifts": null,
+      "area": "400,000 km²",
+      "reason": "Sustainable operations",
+      "authority": "Lakshadweep UT Administration / CMFRI",
+      "lat": 10.5,
+      "lon": 73.0
+    },
+    {
+      "id": "andaman-sea",
+      "name": "Andaman Sea",
+      "status": "active",
+      "tacPercent": 38,
+      "vessels": 350,
+      "description": "Andaman & Nicobar exclusive zone — tuna and pelagic species.",
+      "lifts": null,
+      "area": "600,000 km²",
+      "reason": "Normal operations",
+      "authority": "A&N Administration / Ministry of Fisheries",
+      "lat": 12.0,
+      "lon": 94.0
+    }
+  ]
+}

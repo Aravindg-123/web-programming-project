@@ -1,0 +1,17 @@
+{
+  "__meta": {
+    "dataType": "DUMMY — replace with real data",
+    "realDataset": "DS7 — DoF Census of Marine Fisheries — vessel count by state",
+    "realSourceUrl": "https://dof.gov.in/statistics (Marine Fisheries Census Excel download)",
+    "dataAccessPattern": "B — Download Excel, convert to CSV, place at /data/raw/dof-vessel-census.csv. Columns: state_name, mechanised, motorised, traditional, total",
+    "updateFrequency": "Per census (last: 2016, next expected ~2026)",
+    "fieldMapping": "label ← state_name, count ← total vessel count"
+  },
+  "data": [
+    { "label": "Tamil Nadu",       "count": 2800 },
+    { "label": "Gujarat",          "count": 2200 },
+    { "label": "Kerala",           "count": 1900 },
+    { "label": "Andhra Pradesh",   "count": 1600 },
+    { "label": "Others",           "count":  900 }
+  ]
+}

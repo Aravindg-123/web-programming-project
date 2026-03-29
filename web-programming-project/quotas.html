@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Total Fishing Quota — Fisheries Resources Management</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="enhancements.css">
+</head>
+
+<body>
+  <script>/* Apply dark class immediately to prevent flash of light content on dark-mode page load */(function(){if(localStorage.getItem("fishTheme")==="dark")document.body.classList.add("dark");})();</script>
+
+  <div class="dashboard">
+
+    <!-- NAV -->
+    <nav>
+      <div class="nav-brand">
+        <svg class="fish-icon" viewBox="0 0 24 24">
+          <path d="M2 12C2 12 5 6 12 6C16 6 20 9 22 12C20 15 16 18 12 18C5 18 2 12 2 12Z" />
+          <circle cx="15" cy="11" r="1" />
+          <path d="M2 12 L0 8 L4 10 Z" />
+        </svg>
+        Marine Board
+      </div>
+
+      <ul class="nav-tabs">
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="quotas.html" class="active">Quotas</a></li>
+        <li><a href="seasonal.html">Seasonal Bans</a></li>
+        <li><a href="alerts.html">Alerts</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <span><span class="live-dot"></span>Live — Feb 24, 2026</span>
+        <span>Zone: India EEZ</span>
+        <div class="theme-toggle" id="themeToggle" title="Toggle light / dark theme">
+          <span class="toggle-icon">&#9728;</span>
+          <div class="toggle-track">
+            <div class="toggle-knob"></div>
+          </div>
+          <span class="toggle-icon">&#127769;</span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
+
+      <div class="top-bar">
+        <div class="page-title">Total Fishing <span>Quota</span></div>
+        <div class="metric-strip">
+          <div class="glass metric-card">
+            <div class="metric-icon teal"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12c2-3 5-5 9-5s7 2 9 5c-2 3-5 5-9 5s-7-2-9-5z"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg></div>
+            <div class="metric-data">
+              <div class="metric-label">Annual MSY</div>
+              <div class="metric-value teal">39 Lakh</div>
+              <div class="metric-delta">tons / year (India EEZ)</div>
+            </div>
+          </div>
+          <div class="glass metric-card">
+            <div class="metric-icon amber"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M12 8v8"/></svg></div>
+            <div class="metric-data">
+              <div class="metric-label">Current Catch</div>
+              <div class="metric-value amber">34 Lakh</div>
+              <div class="metric-delta">87% of MSY</div>
+            </div>
+          </div>
+          <div class="glass metric-card">
+            <div class="metric-icon jade"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="metric-data">
+              <div class="metric-label">Remaining</div>
+              <div class="metric-value jade">~5 Lakh</div>
+              <div class="metric-delta">13% unused</div>
+            </div>
+          </div>
+          <div class="glass metric-card">
+            <div class="metric-icon teal"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+            <div class="metric-data">
+              <div class="metric-label">Period</div>
+              <div class="metric-value teal" style="font-size:0.85rem;">2025–26</div>
+              <div class="metric-delta">Apr 1 – Mar 31</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-main"
+        style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:12px;flex:1;overflow:hidden;">
+
+        <div class="glass chart-card" style="padding:16px;">
+          <div class="chart-title">Quota by Species — Annual TAC (tons)</div>
+          <div class="chart-wrap">
+            <canvas id="quotaSpeciesChart"></canvas>
+          </div>
+        </div>
+
+        <div class="glass chart-card" style="padding:16px;">
+          <div class="chart-title">Quota Distribution by Region</div>
+          <div class="chart-wrap">
+            <canvas id="quotaRegionChart"></canvas>
+          </div>
+        </div>
+
+        <div class="glass chart-card" style="padding:16px;">
+          <div class="chart-title">Quota Utilisation Progress — All Species</div>
+          <div class="chart-wrap" style="overflow-y:auto;max-height:200px;">
+            <div id="quotaProgressList"></div>
+          </div>
+        </div>
+
+        <div class="glass chart-card" style="padding:16px;">
+          <div class="chart-title">Monthly Quota Burn Rate</div>
+          <div class="chart-wrap">
+            <canvas id="quotaBurnChart"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="data-source-strip">
+        <span class="ds-label">Data Sources:</span>
+        <a href="https://www.cmfri.org.in/" target="_blank" rel="noopener" class="ds-link">CMFRI (Species MSY &amp; Landings)</a>
+        <span class="ds-sep">&middot;</span>
+        <a href="https://dof.gov.in/statistics" target="_blank" rel="noopener" class="ds-link">DoF (Quota Allocation &amp; Vessel Census)</a>
+        <span class="ds-sep">&middot;</span>
+        <a href="https://data.gov.in/sector/fisheries" target="_blank" rel="noopener" class="ds-link">data.gov.in (OGD Fisheries)</a>
+        <span class="ds-sep">&middot;</span>
+        <a href="https://eprints.cmfri.org.in" target="_blank" rel="noopener" class="ds-link">CMFRI eprints (Species Landings CSV)</a>
+      </div>
+
+      <div class="dash-footer">
+        <span>© 2026 Fisheries Resources Management System</span>
+        <span>MSY — Maximum Sustainable Yield · CMFRI / DoF India</span>
+        <span>Units: Metric Tonnes · Period: Apr 1, 2025 – Mar 31, 2026</span>
+      </div>
+
+    </div><!-- /page-content -->
+
+  </div><!-- /dashboard -->
+
+  <script src="main.js"></script>
+<script src="enhancements.js"></script>
+</body>
+
+</html>

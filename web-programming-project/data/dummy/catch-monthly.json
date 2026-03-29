@@ -1,0 +1,30 @@
+{
+  "__meta": {
+    "dataType": "DUMMY — replace with real data",
+    "realDataset": "NEW-2 — CMFRI Monthly Marine Fisheries Flash Bulletin",
+    "realSourceUrl": "https://cmfri.org.in/publications (Monthly Flash Bulletin)",
+    "dataAccessPattern": "B — Download monthly PDF, extract table to /data/raw/cmfri-monthly-catch.csv",
+    "updateFrequency": "Monthly",
+    "fieldMapping": "month ← month column, value ← total_catch_tonnes"
+  },
+  "actual": [
+    { "month": "Aug", "value": 280000 },
+    { "month": "Sep", "value": 310000 },
+    { "month": "Oct", "value": 390000 },
+    { "month": "Nov", "value": 360000 },
+    { "month": "Dec", "value": 320000 },
+    { "month": "Jan", "value": 290000 },
+    { "month": "Feb", "value": 310000 },
+    { "month": "Mar", "value": null }
+  ],
+  "projected": [
+    { "month": "Aug", "value": null },
+    { "month": "Sep", "value": null },
+    { "month": "Oct", "value": null },
+    { "month": "Nov", "value": null },
+    { "month": "Dec", "value": null },
+    { "month": "Jan", "value": null },
+    { "month": "Feb", "value": null },
+    { "month": "Mar", "value": 330000 }
+  ]
+}

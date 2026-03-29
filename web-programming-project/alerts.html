@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Active Overfishing Alerts — Fisheries Resources Management</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="enhancements.css">
+</head>
+
+<body>
+  <script>/* Apply dark class immediately to prevent flash of light content on dark-mode page load */(function(){if(localStorage.getItem("fishTheme")==="dark")document.body.classList.add("dark");})();</script>
+
+  <div class="dashboard">
+
+    <!-- NAV -->
+    <nav>
+      <div class="nav-brand">
+        <svg class="fish-icon" viewBox="0 0 24 24">
+          <path d="M2 12C2 12 5 6 12 6C16 6 20 9 22 12C20 15 16 18 12 18C5 18 2 12 2 12Z" />
+          <circle cx="15" cy="11" r="1" />
+          <path d="M2 12 L0 8 L4 10 Z" />
+        </svg>
+        Marine Board
+      </div>
+
+      <ul class="nav-tabs">
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="quotas.html">Quotas</a></li>
+        <li><a href="seasonal.html">Seasonal Bans</a></li>
+        <li><a href="alerts.html" class="active">Alerts</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <span><span class="live-dot"></span>Live — Feb 24, 2026</span>
+        <span>Zone: India EEZ</span>
+        <div class="theme-toggle" id="themeToggle" title="Toggle light / dark theme">
+          <span class="toggle-icon">&#9728;</span>
+          <div class="toggle-track">
+            <div class="toggle-knob"></div>
+          </div>
+          <span class="toggle-icon">&#127769;</span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
+
+      <div class="top-bar">
+        <div class="page-title">Active Overfishing <span>Alerts</span></div>
+        <div class="metric-strip">
+          <div class="glass metric-card">
+            <div class="metric-icon coral"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+            <div class="metric-data">
+              <div class="metric-label">Total Alerts</div>
+              <div class="metric-value coral">3</div>
+              <div class="metric-delta">Active now</div>
+            </div>
+          </div>
+          <div class="glass metric-card">
+            <div class="metric-icon coral"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></div>
+            <div class="metric-data">
+              <div class="metric-label">Critical</div>
+              <div class="metric-value coral">2</div>
+              <div class="metric-delta">Immediate action</div>
+            </div>
+          </div>
+          <div class="glass metric-card">
+            <div class="metric-icon amber"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+            <div class="metric-data">
+              <div class="metric-label">Warning</div>
+              <div class="metric-value amber">1</div>
+              <div class="metric-delta">Monitor closely</div>
+            </div>
+          </div>
+          <div class="glass metric-card">
+            <div class="metric-icon jade"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+            <div class="metric-data">
+              <div class="metric-label">Info</div>
+              <div class="metric-value jade">1</div>
+              <div class="metric-delta">Advisory only</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-main"
+        style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:12px;flex:1;overflow:hidden;">
+
+        <div class="glass chart-card" style="padding:16px;">
+          <div class="chart-title">Alert History — Last 30 Days</div>
+          <div class="chart-wrap">
+            <canvas id="alertHistoryChart"></canvas>
+          </div>
+        </div>
+
+        <div class="glass" style="padding:16px;display:flex;flex-direction:column;gap:8px;">
+          <div class="section-label">Active Incident Log</div>
+          <div class="alert-item critical" style="cursor:default;">
+            <div class="alert-badge critical"></div>
+            <div class="alert-text">
+              <div class="alert-title">Kerala & Lakshadweep — high waves 2.5–3.2m, all vessels return to harbour</div>
+              <div class="alert-time">Mar 28, 2026 · 6:12 AM IST · West Coast · INCOIS Level 1</div>
+            </div>
+          </div>
+          <div class="alert-item critical" style="cursor:default;">
+            <div class="alert-badge critical"></div>
+            <div class="alert-text">
+              <div class="alert-title">Tamil Nadu coast — Seer Fish vessel density above threshold</div>
+              <div class="alert-time">Mar 28, 2026 · 4:18 AM IST · East Coast · CMFRI Quota Monitor</div>
+            </div>
+          </div>
+          <div class="alert-item warning" style="cursor:default;">
+            <div class="alert-badge warning"></div>
+            <div class="alert-text">
+              <div class="alert-title">Andhra Pradesh coast — squall warning, wind 45–55 kmph gusting 65</div>
+              <div class="alert-time">Mar 28, 2026 · 3:00 AM IST · East Coast · IMD Warning</div>
+            </div>
+          </div>
+          <div class="alert-item info" style="cursor:default;">
+            <div class="alert-badge info"></div>
+            <div class="alert-text">
+              <div class="alert-title">INCOIS PFZ Advisory — new Potential Fishing Zones off Porbandar (Gujarat)</div>
+              <div class="alert-time">Mar 28, 2026 · 9:00 AM IST · Gujarat · INCOIS Advisory</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass chart-card" style="padding:16px;">
+          <div class="chart-title">Alerts by Zone — Frequency</div>
+          <div class="chart-wrap">
+            <canvas id="alertZoneChart"></canvas>
+          </div>
+        </div>
+
+        <div class="glass chart-card" style="padding:16px;">
+          <div class="chart-title">Risk Index Trend — Weekly</div>
+          <div class="chart-wrap">
+            <canvas id="alertRiskChart"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="data-source-strip">
+        <span class="ds-label">Data Sources:</span>
+        <a href="https://fishwatch.incois.gov.in" target="_blank" rel="noopener" class="ds-link">INCOIS Fishwatch (Overfishing &amp; Wave Alerts)</a>
+        <span class="ds-sep">&middot;</span>
+        <a href="https://mausam.imd.gov.in" target="_blank" rel="noopener" class="ds-link">IMD Marine Warnings</a>
+        <span class="ds-sep">&middot;</span>
+        <a href="https://www.cmfri.org.in/" target="_blank" rel="noopener" class="ds-link">CMFRI (Species Quota Monitoring)</a>
+        <span class="ds-sep">&middot;</span>
+        <a href="https://incois.gov.in/portal/pfz/pfz.jsp" target="_blank" rel="noopener" class="ds-link">INCOIS PFZ Advisory</a>
+      </div>
+
+      <div class="dash-footer">
+        <span>© 2026 Fisheries Resources Management System</span>
+        <span>Monitoring: INCOIS Fishwatch + IMD Marine Warnings + NAVIC</span>
+        <span>Last updated: Feb 24, 2026 08:30 UTC</span>
+      </div>
+
+    </div><!-- /page-content -->
+
+  </div><!-- /dashboard -->
+
+  <script src="main.js"></script>
+<script src="enhancements.js"></script>
+</body>
+
+</html>

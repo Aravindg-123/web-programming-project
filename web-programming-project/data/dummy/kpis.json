@@ -1,0 +1,20 @@
+{
+  "__meta": {
+    "dataType": "DUMMY — replace with real data",
+    "realDataset": "DS1 — DoF Year-wise Fish Production (data.gov.in)",
+    "realSourceUrl": "https://www.data.gov.in/resource/year-wise-details-total-fish-production-and-fisheries-exports-2019-20-2023-24",
+    "dataAccessPattern": "A — data.gov.in OGD REST API (requires free API key)",
+    "updateFrequency": "Annually",
+    "fieldMapping": "currentCatch ← total_fish_production_lakh_tonnes × 100000"
+  },
+  "totalQuota": 4200000,
+  "currentCatch": 3100000,
+  "catchPercent": 74,
+  "activeAlerts": 3,
+  "criticalAlerts": 2,
+  "zonesActive": 6,
+  "restrictedZones": 2,
+  "vesselsAtSea": 8800,
+  "biomassIndex": 78,
+  "biomassStatus": "Moderate"
+}

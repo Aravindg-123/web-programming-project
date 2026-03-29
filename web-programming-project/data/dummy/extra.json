@@ -1,0 +1,528 @@
+{
+    "metadata": {
+        "system_name": "Indian Fisheries Management Dashboard",
+        "last_updated": "2026-03-28T09:30:00Z",
+        "data_region": "India",
+        "sources": [
+            {
+                "agency": "Central Marine Fisheries Research Institute (CMFRI)",
+                "dataType": "Catch Breakdown, Biomass, Species Quotas",
+                "url": "https://www.cmfri.org.in/"
+            },
+            {
+                "agency": "Department of Fisheries, Government of India",
+                "dataType": "Seasonal Bans, Total Yield Data",
+                "url": "https://dof.gov.in/"
+            },
+            {
+                "agency": "Indian National Centre for Ocean Information Services (INCOIS)",
+                "dataType": "Overfishing Alerts, Weather Warnings",
+                "url": "https://incois.gov.in/"
+            },
+            {
+                "agency": "Open Government Data (OGD) Platform India",
+                "dataType": "Historical Production APIs",
+                "url": "https://data.gov.in/sector/fisheries"
+            }
+        ]
+    },
+    "dashboard": {
+        "kpis": {
+            "total_yield_potential": 3900000,
+            "current_catch": 3400000,
+            "catch_unit": "Tons / year",
+            "active_alerts": 4,
+            "zones_active": 7,
+            "biomass_index": "78%",
+            "vessels_at_sea": 14205,
+            "vessels_trend": "+124 since dawn",
+            "season_progress_pct": 75
+        },
+        "catch_breakdown": [
+            {
+                "category": "Pelagic",
+                "percentage": 54,
+                "color": "#00a8cc"
+            },
+            {
+                "category": "Demersal",
+                "percentage": 29,
+                "color": "#f2a900"
+            },
+            {
+                "category": "Crustaceans (Shellfish)",
+                "percentage": 11,
+                "color": "#4caf50"
+            },
+            {
+                "category": "Molluscs & Others",
+                "percentage": 6,
+                "color": "#9c27b0"
+            }
+        ],
+        "monthly_catch_trend": [
+            {
+                "month": "Aug",
+                "catch_tons": 280000
+            },
+            {
+                "month": "Sep",
+                "catch_tons": 310000
+            },
+            {
+                "month": "Oct",
+                "catch_tons": 340000
+            },
+            {
+                "month": "Nov",
+                "catch_tons": 320000
+            },
+            {
+                "month": "Dec",
+                "catch_tons": 290000
+            },
+            {
+                "month": "Jan",
+                "catch_tons": 270000
+            },
+            {
+                "month": "Feb",
+                "catch_tons": 250000
+            }
+        ],
+        "overfishing_risk_trend": [
+            {
+                "week": "W1",
+                "risk_score": 25
+            },
+            {
+                "week": "W2",
+                "risk_score": 30
+            },
+            {
+                "week": "W3",
+                "risk_score": 28
+            },
+            {
+                "week": "W4",
+                "risk_score": 40
+            },
+            {
+                "week": "W5",
+                "risk_score": 45
+            },
+            {
+                "week": "W6",
+                "risk_score": 48
+            },
+            {
+                "week": "W7",
+                "risk_score": 52
+            },
+            {
+                "week": "W8",
+                "risk_score": 55
+            },
+            {
+                "week": "W9",
+                "risk_score": 58
+            }
+        ],
+        "fleet_distribution": [
+            {
+                "fleet_origin": "Gujarat",
+                "vessel_count": 65
+            },
+            {
+                "fleet_origin": "Tamil Nadu",
+                "vessel_count": 52
+            },
+            {
+                "fleet_origin": "Maharashtra",
+                "vessel_count": 48
+            },
+            {
+                "fleet_origin": "Kerala",
+                "vessel_count": 42
+            },
+            {
+                "fleet_origin": "Other",
+                "vessel_count": 40
+            }
+        ]
+    },
+    "quotas": {
+        "annual_summary": {
+            "annual_msy": 3900000,
+            "allocated_target": 3500000,
+            "remaining": 400000,
+            "period": "2025-2026"
+        },
+        "species_utilization": [
+            {
+                "species": "Indian Mackerel",
+                "msy_tons": 280000,
+                "caught_tons": 245000,
+                "utilization_pct": 87
+            },
+            {
+                "species": "Oil Sardine",
+                "msy_tons": 350000,
+                "caught_tons": 260000,
+                "utilization_pct": 74
+            },
+            {
+                "species": "Ribbonfish",
+                "msy_tons": 220000,
+                "caught_tons": 180000,
+                "utilization_pct": 81
+            },
+            {
+                "species": "Penaeid Shrimp",
+                "msy_tons": 190000,
+                "caught_tons": 165000,
+                "utilization_pct": 86
+            },
+            {
+                "species": "Bombay Duck",
+                "msy_tons": 130000,
+                "caught_tons": 110000,
+                "utilization_pct": 84
+            },
+            {
+                "species": "Croakers",
+                "msy_tons": 150000,
+                "caught_tons": 125000,
+                "utilization_pct": 83
+            },
+            {
+                "species": "Seer Fish",
+                "msy_tons": 60000,
+                "caught_tons": 55000,
+                "utilization_pct": 91
+            }
+        ],
+        "regional_distribution": [
+            {
+                "region": "Gujarat Coast",
+                "percentage": 22
+            },
+            {
+                "region": "Tamil Nadu Coast",
+                "percentage": 20
+            },
+            {
+                "region": "Kerala Coast",
+                "percentage": 16
+            },
+            {
+                "region": "Maharashtra Coast",
+                "percentage": 11
+            },
+            {
+                "region": "Andhra Pradesh Coast",
+                "percentage": 10
+            },
+            {
+                "region": "Other Coasts",
+                "percentage": 21
+            }
+        ],
+        "monthly_burn_rate": [
+            {
+                "month": "Jan",
+                "actual": 640,
+                "projected": 640
+            },
+            {
+                "month": "Feb",
+                "actual": 710,
+                "projected": 750
+            },
+            {
+                "month": "Mar",
+                "actual": null,
+                "projected": 760
+            },
+            {
+                "month": "Apr",
+                "actual": null,
+                "projected": 720
+            },
+            {
+                "month": "May",
+                "actual": null,
+                "projected": 700
+            },
+            {
+                "month": "Jun",
+                "actual": null,
+                "projected": 680
+            },
+            {
+                "month": "Jul",
+                "actual": null,
+                "projected": 660
+            },
+            {
+                "month": "Aug",
+                "actual": null,
+                "projected": 680
+            },
+            {
+                "month": "Sep",
+                "actual": null,
+                "projected": 710
+            },
+            {
+                "month": "Oct",
+                "actual": null,
+                "projected": 810
+            },
+            {
+                "month": "Nov",
+                "actual": null,
+                "projected": 750
+            },
+            {
+                "month": "Dec",
+                "actual": null,
+                "projected": 690
+            }
+        ]
+    },
+    "seasonalBans": {
+        "ban_kpis": {
+            "restricted_zones": 2,
+            "caution_zones": 0,
+            "active_zones": 2,
+            "next_lift_date": "June 15, 2026"
+        },
+        "zone_status": [
+            {
+                "zone": "East Coast (TN, AP, OD, WB)",
+                "status": "RESTRICTED",
+                "moratorium_period": "April 15 - June 14",
+                "reason": "Monsoon Breeding Season"
+            },
+            {
+                "zone": "West Coast (GJ, MH, GA, KA, KL)",
+                "status": "ACTIVE",
+                "moratorium_period": "June 1 - July 31",
+                "reason": "Open Season"
+            },
+            {
+                "zone": "Andaman & Nicobar Islands",
+                "status": "RESTRICTED",
+                "moratorium_period": "April 15 - June 14",
+                "reason": "Monsoon Breeding Season"
+            },
+            {
+                "zone": "Lakshadweep Islands",
+                "status": "ACTIVE",
+                "moratorium_period": "June 1 - July 31",
+                "reason": "Open Season"
+            }
+        ],
+        "timeline_chart_data": [
+            {
+                "zone": "East Coast",
+                "start_date": "2026-04-15",
+                "end_date": "2026-06-14"
+            },
+            {
+                "zone": "West Coast",
+                "start_date": "2026-06-01",
+                "end_date": "2026-07-31"
+            },
+            {
+                "zone": "A&N Islands",
+                "start_date": "2026-04-15",
+                "end_date": "2026-06-14"
+            },
+            {
+                "zone": "Lakshadweep",
+                "start_date": "2026-06-01",
+                "end_date": "2026-07-31"
+            }
+        ]
+    },
+    "alerts": {
+        "alert_kpis": {
+            "total_alerts": 4,
+            "critical": 1,
+            "warning": 2,
+            "info": 1
+        },
+        "active_incidents": [
+            {
+                "id": "ALT-001",
+                "severity": "CRITICAL",
+                "title": "High Wave Alert - Kerala & Lakshadweep",
+                "description": "Waves of 2.5 - 3.2 meters expected. All mechanized vessels advised to return to harbor.",
+                "timestamp": "Mar 28, 2026 - 06:12 IST",
+                "zone": "West Coast"
+            },
+            {
+                "id": "ALT-002",
+                "severity": "WARNING",
+                "title": "Seer Fish - High Effort Zone Detected",
+                "description": "Vessel density tracking shows concentration exceeding threshold off Tamil Nadu coast. Approaching MSY.",
+                "timestamp": "Mar 28, 2026 - 04:18 IST",
+                "zone": "East Coast"
+            },
+            {
+                "id": "ALT-003",
+                "severity": "WARNING",
+                "title": "Squall Weather Warning - Andhra Pradesh",
+                "description": "Wind speeds reaching 45-55 kmph gusting to 65 kmph likely along and off north AP coast.",
+                "timestamp": "Mar 27, 2026 - 14:30 IST",
+                "zone": "East Coast"
+            },
+            {
+                "id": "ALT-004",
+                "severity": "INFO",
+                "title": "PFZ Advisory Issued",
+                "description": "New Potential Fishing Zone coordinates updated for Gujarat coast (Porbandar region).",
+                "timestamp": "Mar 27, 2026 - 09:00 IST",
+                "zone": "West Coast"
+            }
+        ],
+        "alert_history_weekly": [
+            {
+                "week": "W1",
+                "critical": 1,
+                "warning": 2,
+                "info": 0
+            },
+            {
+                "week": "W2",
+                "critical": 2,
+                "warning": 1,
+                "info": 1
+            },
+            {
+                "week": "W3",
+                "critical": 1,
+                "warning": 0,
+                "info": 2
+            },
+            {
+                "week": "W4",
+                "critical": 1,
+                "warning": 3,
+                "info": 0
+            },
+            {
+                "week": "W5",
+                "critical": 0,
+                "warning": 1,
+                "info": 1
+            },
+            {
+                "week": "W6",
+                "critical": 1,
+                "warning": 1,
+                "info": 3
+            },
+            {
+                "week": "W7",
+                "critical": 2,
+                "warning": 0,
+                "info": 1
+            },
+            {
+                "week": "W8",
+                "critical": 0,
+                "warning": 2,
+                "info": 2
+            },
+            {
+                "week": "W9",
+                "critical": 1,
+                "warning": 1,
+                "info": 1
+            },
+            {
+                "week": "W10",
+                "critical": 2,
+                "warning": 0,
+                "info": 0
+            },
+            {
+                "week": "W11",
+                "critical": 1,
+                "warning": 2,
+                "info": 1
+            },
+            {
+                "week": "W12",
+                "critical": 0,
+                "warning": 1,
+                "info": 2
+            },
+            {
+                "week": "W13",
+                "critical": 2,
+                "warning": 1,
+                "info": 1
+            }
+        ],
+        "alerts_by_zone_freq": [
+            {
+                "zone": "West Coast",
+                "alert_count": 8
+            },
+            {
+                "zone": "East Coast",
+                "alert_count": 6
+            },
+            {
+                "zone": "A&N Islands",
+                "alert_count": 4
+            },
+            {
+                "zone": "Lakshadweep",
+                "alert_count": 2
+            }
+        ],
+        "risk_index_trend": [
+            {
+                "week": "W1",
+                "risk_score": 25
+            },
+            {
+                "week": "W2",
+                "risk_score": 30
+            },
+            {
+                "week": "W3",
+                "risk_score": 28
+            },
+            {
+                "week": "W4",
+                "risk_score": 40
+            },
+            {
+                "week": "W5",
+                "risk_score": 45
+            },
+            {
+                "week": "W6",
+                "risk_score": 48
+            },
+            {
+                "week": "W7",
+                "risk_score": 52
+            },
+            {
+                "week": "W8",
+                "risk_score": 55
+            },
+            {
+                "week": "W9",
+                "risk_score": 58
+            }
+        ]
+    }
+}

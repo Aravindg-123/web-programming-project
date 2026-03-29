@@ -1,0 +1,21 @@
+{
+  "__meta": {
+    "dataType": "DUMMY — replace with real data",
+    "realDataset": "DS2 — CMFRI Species-wise Landings",
+    "realSourceUrl": "https://eprints.cmfri.org.in / https://www.data.gov.in/catalog/fish-catch-and-landings-group-species",
+    "dataAccessPattern": "B — Download CSV, place at /data/raw/cmfri-species-landings.csv",
+    "updateFrequency": "Annually",
+    "fieldMapping": "name ← species_name, caught ← catch_tonnes, quota ← quota_tonnes"
+  },
+  "data": [
+    { "name": "Indian Mackerel",  "caught": 246000, "quota": 300000, "percent": 82, "color": "#0097a7" },
+    { "name": "Oil Sardine",      "caught": 228000, "quota": 300000, "percent": 76, "color": "#2e7d32" },
+    { "name": "Ribbonfish",       "caught": 122000, "quota": 200000, "percent": 61, "color": "#d4900a" },
+    { "name": "Penaeid Shrimp",   "caught": 116000, "quota": 200000, "percent": 58, "color": "#7c3aed" },
+    { "name": "Pomfret",          "caught":  88000, "quota": 200000, "percent": 44, "color": "#0288d1" },
+    { "name": "Anchovies",        "caught":  78000, "quota": 200000, "percent": 39, "color": "#e53935" },
+    { "name": "Seer Fish",        "caught":  66000, "quota": 200000, "percent": 33, "color": "#d84315" },
+    { "name": "Catfish",          "caught":  56000, "quota": 200000, "percent": 28, "color": "#1565c0" },
+    { "name": "Squid",            "caught":  42000, "quota": 200000, "percent": 21, "color": "#6a1b9a" }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "__meta": {
+    "dataType": "DUMMY — replace with real data",
+    "realDataset": "NEW-4 — Derived Risk Index from INCOIS PFZ advisories + IMD warnings",
+    "realSourceUrl": "https://incois.gov.in/portal/pfz/pfz.jsp",
+    "dataAccessPattern": "C — Computed score: (pfzNoFishingZones×10) + (imdWarnings×8) + (avgQuotaUtil×0.3). Normalise to 0–100.",
+    "updateFrequency": "Weekly",
+    "fieldMapping": "week ← advisory week, value ← computed risk score (0–100)"
+  },
+  "data": [
+    { "week": "W1", "value": 22 },
+    { "week": "W2", "value": 25 },
+    { "week": "W3", "value": 29 },
+    { "week": "W4", "value": 27 },
+    { "week": "W5", "value": 33 },
+    { "week": "W6", "value": 38 },
+    { "week": "W7", "value": 41 },
+    { "week": "W8", "value": 45 },
+    { "week": "W9", "value": 48 }
+  ]
+}

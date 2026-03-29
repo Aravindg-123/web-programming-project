@@ -1,0 +1,19 @@
+{
+  "__meta": {
+    "dataType": "DUMMY — replace with real data",
+    "realDataset": "NEW-1 — CMFRI Annual Marine Fisheries Publication (year-wise biomass trend)",
+    "realSourceUrl": "https://eprints.cmfri.org.in (search: Annual Marine Fisheries; extract 'Year-wise production and stock status' table)",
+    "dataAccessPattern": "C — Manual extract from CMFRI annual PDF report. Update once per year after report release.",
+    "updateFrequency": "Annually",
+    "fieldMapping": "year ← publication year, value ← biomass index (0–100 normalised from stock assessment)"
+  },
+  "data": [
+    { "year": 2020, "value": 71 },
+    { "year": 2021, "value": 73 },
+    { "year": 2022, "value": 74 },
+    { "year": 2023, "value": 76 },
+    { "year": 2024, "value": 76 },
+    { "year": 2025, "value": 78 },
+    { "year": 2026, "value": 78 }
+  ]
+}
