@@ -35,15 +35,15 @@
 
   /* ── Coastal state centroids ─────────────────────────────── */
   var STATES = [
-    { code:'GJ', name:'Gujarat',          lon: 72,   lat: 22.5 },
-    { code:'MH', name:'Maharashtra',      lon: 75.5, lat: 19   },
-    { code:'GO', name:'Goa',              lon: 74.1, lat: 15.5 },
-    { code:'KA', name:'Karnataka',        lon: 76,   lat: 15   },
-    { code:'KL', name:'Kerala',           lon: 76.3, lat: 11   },
-    { code:'TN', name:'Tamil Nadu',       lon: 78.8, lat: 11   },
-    { code:'AP', name:'Andhra Pradesh',   lon: 79.5, lat: 15.5 },
-    { code:'OR', name:'Odisha',           lon: 84,   lat: 20.5 },
-    { code:'WB', name:'West Bengal',      lon: 88,   lat: 23   },
+    { code:'GJ', name:'Gujarat',          lon: 70.60, lat: 22.04 },
+    { code:'MH', name:'Maharashtra',      lon: 71.80, lat: 19.45 },
+    { code:'GO', name:'Goa',              lon: 72.90, lat: 16.60 },
+    { code:'KA', name:'Karnataka',        lon: 73.40, lat: 13.74 },
+    { code:'KL', name:'Kerala',           lon: 75.60, lat: 9.48  },
+    { code:'TN', name:'Tamil Nadu',       lon: 78.80, lat: 11.00 },
+    { code:'AP', name:'Andhra Pradesh',   lon: 79.50, lat: 15.50 },
+    { code:'OR', name:'Odisha',           lon: 84.70, lat: 20.70 },
+    { code:'WB', name:'West Bengal',      lon: 88.25, lat: 24.60 },
   ];
 
   /* ── Palettes ────────────────────────────────────────────── */
@@ -331,9 +331,10 @@
       mapWrap.appendChild(indiaSVG);
     }
 
-    /* 3. Set correct viewBox covering ALL Indian state paths */
-    indiaSVG.setAttribute('viewBox', VB.x + ' ' + VB.y + ' ' + VB.w + ' ' + VB.h);
-    indiaSVG.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    /* 3. Set correct viewBox with extra padding on left/right to prevent Gujarat clipping */
+    indiaSVG.setAttribute('viewBox', (VB.x - 40) + ' ' + VB.y + ' ' + (VB.w + 60) + ' ' + VB.h);
+    /* xMinYMid: align map to LEFT edge, freeing right side for the panel */
+    indiaSVG.setAttribute('preserveAspectRatio', 'xMinYMid meet');
 
     /* 4. Fill the mapWrap area */
     indiaSVG.style.display   = 'block';
@@ -341,9 +342,29 @@
     indiaSVG.style.height    = '100%';
     indiaSVG.style.position  = 'absolute';
     indiaSVG.style.top       = '0';
-    indiaSVG.style.left      = '0';
+    indiaSVG.style.left      = '2%';
 
-    /* 5. Build panel, colour states, add markers */
+    /* 5. Inject full-viewBox ocean background so the whole map area is blue */
+    var existingBg = document.getElementById('indiaBg');
+    if (existingBg) existingBg.parentNode.removeChild(existingBg);
+    var ns = 'http://www.w3.org/2000/svg';
+    var oceanBg = document.createElementNS(ns, 'rect');
+    oceanBg.setAttribute('id', 'indiaBg');
+    oceanBg.setAttribute('x', VB.x);
+    oceanBg.setAttribute('y', VB.y);
+    oceanBg.setAttribute('width', VB.w);
+    oceanBg.setAttribute('height', VB.h);
+    var isDarkMode = document.body.classList.contains('dark');
+    oceanBg.setAttribute('fill', isDarkMode ? 'rgba(4,40,80,0.92)' : 'rgba(180,220,245,0.95)');
+    /* Insert as first child so it sits behind everything */
+    var firstChild = indiaSVG.firstChild;
+    if (firstChild) {
+      indiaSVG.insertBefore(oceanBg, firstChild);
+    } else {
+      indiaSVG.appendChild(oceanBg);
+    }
+
+    /* 6. Build panel, colour states, add markers */
     buildPanelContainer();
     applyTheme();
     wireStatePaths();
