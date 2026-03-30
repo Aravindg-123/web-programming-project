@@ -35,15 +35,15 @@
 
   /* ── Coastal state centroids ─────────────────────────────── */
   var STATES = [
-    { code:'GJ', name:'Gujarat',          lon: 72,   lat: 22.5 },
-    { code:'MH', name:'Maharashtra',      lon: 75.5, lat: 19   },
-    { code:'GO', name:'Goa',              lon: 74.1, lat: 15.5 },
-    { code:'KA', name:'Karnataka',        lon: 76,   lat: 15   },
-    { code:'KL', name:'Kerala',           lon: 76.3, lat: 11   },
-    { code:'TN', name:'Tamil Nadu',       lon: 78.8, lat: 11   },
-    { code:'AP', name:'Andhra Pradesh',   lon: 79.5, lat: 15.5 },
-    { code:'OR', name:'Odisha',           lon: 84,   lat: 20.5 },
-    { code:'WB', name:'West Bengal',      lon: 88,   lat: 23   },
+    { code:'GJ', name:'Gujarat',          lon: 70.5, lat: 22.5 },
+    { code:'MH', name:'Maharashtra',      lon: 72.5, lat: 19   },
+    { code:'GO', name:'Goa',              lon: 73.5, lat: 15.5 },
+    { code:'KA', name:'Karnataka',        lon: 74.5, lat: 15   },
+    { code:'KL', name:'Kerala',           lon: 76.0, lat: 10.5 },
+    { code:'TN', name:'Tamil Nadu',       lon: 79.2, lat: 11.8 },
+    { code:'AP', name:'Andhra Pradesh',   lon: 80.0, lat: 15.5 },
+    { code:'OR', name:'Odisha',           lon: 85.5, lat: 20.5 },
+    { code:'WB', name:'West Bengal',      lon: 88.0, lat: 23   },
   ];
 
   /* ── Palettes ────────────────────────────────────────────── */
