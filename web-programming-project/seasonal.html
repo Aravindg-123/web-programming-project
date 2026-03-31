@@ -248,44 +248,65 @@
         </div>
 
         <!-- ── BOTTOM-RIGHT: Zone Status + Rich Stats ───────────────────── -->
-        <div class="glass chart-card" style="padding:16px;display:flex;flex-direction:column;gap:10px;overflow:hidden;">
-          <div class="chart-title">Zone Status Distribution</div>
+        <div class="glass chart-card" style="padding:16px;display:flex;flex-direction:column;gap:0;overflow:hidden;">
+          <div class="chart-title" style="flex-shrink:0;margin-bottom:10px;">Zone Status Distribution</div>
 
-          <!-- Donut + legend row — bigger canvas -->
-          <div style="display:flex;gap:14px;align-items:center;height:140px;flex-shrink:0;">
-            <div style="position:relative;width:140px;height:140px;flex-shrink:0;">
-              <canvas id="banStatusChart"></canvas>
-            </div>
-            <div id="banStatusLegend" style="font-size:0.64rem;display:flex;flex-direction:column;gap:8px;flex:1;overflow:hidden;"></div>
-          </div>
+          <!-- Everything below scrolls together as one block -->
+          <div style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding-right:3px;">
 
-          <!-- 4-stat summary grid -->
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;flex-shrink:0;">
-            <div style="padding:9px 10px;background:rgba(229,57,53,0.07);border-radius:9px;border-left:3px solid #e53935;">
-              <div style="font-size:0.7rem;font-weight:700;color:#e53935;">61 days</div>
-              <div style="font-size:0.55rem;color:var(--text-secondary);margin-top:2px;">East Coast ban duration<br><span style="opacity:0.7;">Apr 15 – Jun 14</span></div>
+            <!-- Donut + legend row -->
+            <div style="display:flex;gap:14px;align-items:center;height:140px;flex-shrink:0;">
+              <div style="position:relative;width:140px;height:140px;flex-shrink:0;">
+                <canvas id="banStatusChart"></canvas>
+              </div>
+              <div id="banStatusLegend" style="font-size:0.64rem;display:flex;flex-direction:column;gap:8px;flex:1;"></div>
             </div>
-            <div style="padding:9px 10px;background:rgba(212,144,10,0.07);border-radius:9px;border-left:3px solid #d4900a;">
-              <div style="font-size:0.7rem;font-weight:700;color:#d4900a;">61 days</div>
-              <div style="font-size:0.55rem;color:var(--text-secondary);margin-top:2px;">West Coast ban duration<br><span style="opacity:0.7;">Jun 1 – Jul 31</span></div>
-            </div>
-            <div style="padding:9px 10px;background:rgba(46,125,50,0.07);border-radius:9px;border-left:3px solid #2e7d32;">
-              <div style="font-size:0.7rem;font-weight:700;color:#2e7d32;">1,62,022</div>
-              <div style="font-size:0.55rem;color:var(--text-secondary);margin-top:2px;">Total crafts affected<br><span style="opacity:0.7;">Census 2016 baseline</span></div>
-            </div>
-            <div style="padding:9px 10px;background:rgba(0,151,167,0.07);border-radius:9px;border-left:3px solid #0097a7;">
-              <div style="font-size:0.7rem;font-weight:700;color:#0097a7;">MoFAH&amp;D</div>
-              <div style="font-size:0.55rem;color:var(--text-secondary);margin-top:2px;">Enforcing authority<br><span style="opacity:0.7;">Gazette SO 1568(E)</span></div>
-            </div>
-          </div>
 
-          <!-- Species spawning protection note -->
-          <div style="padding:8px 10px;background:rgba(124,58,237,0.06);border-radius:8px;border-left:3px solid #7c3aed;flex-shrink:0;">
-            <div style="font-size:0.6rem;font-weight:600;color:#7c3aed;margin-bottom:3px;">🐟 Species Protected During Ban</div>
-            <div style="font-size:0.58rem;color:var(--text-secondary);line-height:1.5;">
-              Indian Mackerel · Oil Sardine · Penaeid Shrimp · Ribbonfish · Seer Fish · Pomfret
+            <!-- 4-stat summary grid -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;flex-shrink:0;">
+              <div style="padding:9px 10px;background:rgba(229,57,53,0.07);border-radius:9px;border-left:3px solid #e53935;">
+                <div style="font-size:0.7rem;font-weight:700;color:#e53935;">61 days</div>
+                <div style="font-size:0.55rem;color:var(--text-secondary);margin-top:2px;">East Coast ban duration<br><span style="opacity:0.7;">Apr 15 – Jun 14</span></div>
+              </div>
+              <div style="padding:9px 10px;background:rgba(212,144,10,0.07);border-radius:9px;border-left:3px solid #d4900a;">
+                <div style="font-size:0.7rem;font-weight:700;color:#d4900a;">61 days</div>
+                <div style="font-size:0.55rem;color:var(--text-secondary);margin-top:2px;">West Coast ban duration<br><span style="opacity:0.7;">Jun 1 – Jul 31</span></div>
+              </div>
+              <div style="padding:9px 10px;background:rgba(46,125,50,0.07);border-radius:9px;border-left:3px solid #2e7d32;">
+                <div style="font-size:0.7rem;font-weight:700;color:#2e7d32;">1,62,022</div>
+                <div style="font-size:0.55rem;color:var(--text-secondary);margin-top:2px;">Total crafts affected<br><span style="opacity:0.7;">Census 2016 baseline</span></div>
+              </div>
+              <div style="padding:9px 10px;background:rgba(0,151,167,0.07);border-radius:9px;border-left:3px solid #0097a7;">
+                <div style="font-size:0.7rem;font-weight:700;color:#0097a7;">MoFAH&amp;D</div>
+                <div style="font-size:0.55rem;color:var(--text-secondary);margin-top:2px;">Enforcing authority<br><span style="opacity:0.7;">Gazette SO 1568(E)</span></div>
+              </div>
             </div>
-          </div>
+
+            <!-- Species spawning protection note -->
+            <div style="padding:8px 10px;background:rgba(124,58,237,0.06);border-radius:8px;border-left:3px solid #7c3aed;flex-shrink:0;">
+              <div style="font-size:0.6rem;font-weight:600;color:#7c3aed;margin-bottom:3px;">🐟 Species Protected During Ban</div>
+              <div style="font-size:0.58rem;color:var(--text-secondary);line-height:1.5;">
+                Indian Mackerel · Oil Sardine · Penaeid Shrimp · Ribbonfish · Seer Fish · Pomfret
+              </div>
+            </div>
+
+            <!-- Enforcement detail note -->
+            <div style="padding:8px 10px;background:rgba(0,151,167,0.06);border-radius:8px;border-left:3px solid #0097a7;flex-shrink:0;">
+              <div style="font-size:0.6rem;font-weight:600;color:#0097a7;margin-bottom:3px;">⚓ Enforcement Method</div>
+              <div style="font-size:0.58rem;color:var(--text-secondary);line-height:1.5;">
+                Indian Coast Guard vessel monitoring · NAVIC transponder tracking · VMS reporting mandatory for mechanized crafts ≥15m
+              </div>
+            </div>
+
+            <!-- Exemptions note -->
+            <div style="padding:8px 10px;background:rgba(46,125,50,0.06);border-radius:8px;border-left:3px solid #2e7d32;flex-shrink:0;">
+              <div style="font-size:0.6rem;font-weight:600;color:#2e7d32;margin-bottom:3px;">✅ Exemptions</div>
+              <div style="font-size:0.58rem;color:var(--text-secondary);line-height:1.5;">
+                Traditional craft &lt;15m LOA · Fishing within 0–5 NM · Line fishing &amp; cast nets · Aquaculture operations unaffected
+              </div>
+            </div>
+
+          </div><!-- /scroll block -->
         </div>
 
       </div><!-- /sub-main -->

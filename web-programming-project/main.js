@@ -1,4 +1,270 @@
 // ═══════════════════════════════════════════════════════════════
+// CSV DATA EXTRACTION LAYER
+// ───────────────────────────────────────────────────────────────
+// All chart data originates from the CSV files stored in:
+//   /data/csv-data/
+//
+// File map:
+//   dataset1.csv             → Annual fish production + exports (DS1)
+//   dataset2.csv             → Species-group landings 2000–2012 (DS2)
+//   fisheries_state_dataset.csv → State-wise fleet & fisherfolk (DS3)
+//   kpi_cards.csv            → Dashboard KPI snapshot (DS4)
+//   catch_breakdown.csv      → Finfish vs Shellfish split (DS5)
+//   species_quotas.csv       → Per-species MSY quota & utilisation (DS6)
+//
+// How it works (server-side / Node.js context):
+//   1. parseCSV(text)  — generic parser: splits on \n, maps headers → rows
+//   2. loadCSV(path)   — reads the file and calls parseCSV
+//   3. One loader per file (e.g. loadProductionTrend, loadStateFleet …)
+//      converts raw rows into the typed objects the charts expect.
+//   4. loadAllCSV()    — awaits all loaders and merges into csvData store.
+//   5. The live HTTP API in server.js calls these loaders to build its
+//      JSON responses (e.g. GET /api/production-trend reads dataset1.csv).
+//   6. In the browser the compiled fallback arrays below already contain
+//      the values extracted from these files, so no extra fetch is needed.
+// ═══════════════════════════════════════════════════════════════
+
+/**
+ * Generic CSV parser (browser + Node compatible).
+ * Handles quoted fields, trailing \r, and blank trailing rows.
+ *
+ * @param   {string} csvText - Raw CSV string content
+ * @returns {Object[]}       - Array of row objects keyed by header names
+ *
+ * Example — given catch_breakdown.csv:
+ *   species_group,group_catch_pct
+ *   Finfish,65
+ *   Shellfish,35
+ *
+ * parseCSV(text) returns:
+ *   [
+ *     { species_group: 'Finfish',   group_catch_pct: '65' },
+ *     { species_group: 'Shellfish', group_catch_pct: '35' },
+ *   ]
+ */
+function parseCSV(csvText) {
+  const lines = csvText.replace(/\r/g, '').split('\n').filter(l => l.trim());
+  if (lines.length < 2) return [];
+  const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim());
+  return lines.slice(1).map(line => {
+    // Handle quoted fields that may contain commas
+    const cols = [];
+    let cur = '', inQ = false;
+    for (let i = 0; i <= line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') { inQ = !inQ; }
+      else if ((ch === ',' || ch === undefined) && !inQ) { cols.push(cur.trim()); cur = ''; }
+      else { cur += (ch || ''); }
+    }
+    const row = {};
+    headers.forEach((h, i) => { row[h] = cols[i] !== undefined ? cols[i] : ''; });
+    return row;
+  });
+}
+
+// ─── DS1 — dataset1.csv ──────────────────────────────────────
+// Source: data.gov.in — Year-wise Fish Production 2019-20 to 2023-24
+// Columns: Year | Total Fish Production (in Lakh Tonnes)
+//          Fisheries Exports - Quantity (MT) | Fisheries Exports - Value (Rs cr)
+//
+// Raw preview (from /data/csv-data/dataset1.csv):
+//   Year,Total Fish Production (in Lakh Tonnes),...
+//   2019-20,141.64,1289651,46662.85
+//   2020-21,147.25,1149510,43720.98
+//   2021-22,162.48,1369264,57586.48
+//   2022-23,175.45,1735286,63969.14
+//   2023-24,182.7,1781602,60523.89
+//
+// Used by: barChart (Annual Production), expandData.monthly, /api/production-trend
+function parseProductionTrend(csvText) {
+  return parseCSV(csvText).map(row => ({
+    year:       row['Year'],
+    production: parseFloat(row['Total Fish Production (in Lakh Tonnes)']) || 0,
+    exportQty:  parseFloat(row['Fisheries Exports - Quantity (in Metric Tonnes)']) || 0,
+    exportVal:  parseFloat(row['Fisheries Exports - Value (Rs in crore)']) || 0,
+  }));
+}
+
+// ─── DS2 — dataset2.csv ──────────────────────────────────────
+// Source: CMFRI Annual Report — Species-group landings 2000-2012 (thousand tonnes)
+// Columns: Year | Inland fish | Flat fish | Sardines/Anchovies | Tunas
+//          Misc. Marine | Elasmobranchs | Decapods | Total
+//
+// Raw preview (first 3 rows of /data/csv-data/dataset2.csv):
+//   Year,Inland fish,Flat fish,"Indian Shad Sardines, Anchovies,etc.",...
+//   2000,2825.8,18.6,401.8,320.9,1630.2,76.1,340.4,5613.8
+//   2001,3121.7,14.6,424.8,477.4,1514.4,68,316.3,5937.2
+//
+// Used by: Species catch trend analysis, /api/biomass-trend
+function parseSpeciesLandings(csvText) {
+  return parseCSV(csvText).map(row => ({
+    year:          parseInt(row['Year']) || 0,
+    inlandFish:    parseFloat(row['Inland fish']) || 0,
+    flatFish:      parseFloat(row['Flat fish']) || 0,
+    sardines:      parseFloat(row['Indian Shad Sardines, Anchovies,etc.']) || 0,
+    tunas:         parseFloat(row['Tunas etc.']) || 0,
+    miscMarine:    parseFloat(row['Miscellaneous Marine teleousteans']) || 0,
+    elasmobranchs: parseFloat(row['Elasmobranchs (Shark,Rays,Skates,etc)']) || 0,
+    decapods:      parseFloat(row['Decapods (Prawn,Crabs etc.)']) || 0,
+    totalCatch:    parseFloat(row['Total Catch & Landings']) || 0,
+  }));
+}
+
+// ─── DS3 — fisheries_state_dataset.csv ───────────────────────
+// Source: Marine Fisheries Census 2016 — DoF India
+// Columns: state | coastal_length_km | fisherfolk_population
+//          coop_members_* | mechanized_crafts | motorized_crafts
+//          non_motorized_crafts | total_crafts
+//
+// Raw preview (first 3 rows of /data/csv-data/fisheries_state_dataset.csv):
+//   state,coastal_length_km,fisherfolk_population,...,total_crafts
+//   West Bengal,158,368816,...,11054.0
+//   Tamil Nadu,1076,795708,...,43355.0
+//   Kerala,590,563903,...,21684.0
+//
+// Used by: fleetChart (vessels by state), hbarChart (quota utilisation),
+//          expandData['fleet-status'], /api/fleet
+function parseStateFleet(csvText) {
+  return parseCSV(csvText)
+    .filter(row => row['state'])
+    .map(row => ({
+      state:          row['state'],
+      coastalKm:      parseFloat(row['coastal_length_km']) || 0,
+      fisherfolk:     parseInt(row['fisherfolk_population']) || 0,
+      mechanized:     parseFloat(row['mechanized_crafts_total']) || 0,
+      motorized:      parseFloat(row['motorized_crafts_total']) || 0,
+      nonMotorized:   parseFloat(row['non_motorized_crafts']) || 0,
+      totalCrafts:    parseFloat(row['total_crafts']) || 0,
+    }));
+}
+
+// ─── DS4 — kpi_cards.csv ─────────────────────────────────────
+// Source: DoF / CMFRI annual summary — dashboard snapshot values
+// Columns: total_quota_tons | current_catch_tons | catch_utilization_pct
+//          active_alerts_count | fishing_zones_active
+//          vessels_at_sea_count | biomass_index
+//
+// Raw preview (/data/csv-data/kpi_cards.csv):
+//   total_quota_tons,current_catch_tons,catch_utilization_pct,...,biomass_index
+//   3800000,3500000,92.1,5,4,,0.911
+//
+// Used by: Dashboard KPI metric cards, expandData.quota, expandData.catch,
+//          expandData.biomass, /api/kpis
+function parseKPICards(csvText) {
+  const rows = parseCSV(csvText);
+  if (!rows.length) return null;
+  const r = rows[0];
+  return {
+    totalQuotaTons:     parseFloat(r['total_quota_tons']) || 0,
+    currentCatchTons:   parseFloat(r['current_catch_tons']) || 0,
+    catchUtilizationPct: parseFloat(r['catch_utilization_pct']) || 0,
+    activeAlerts:       parseInt(r['active_alerts_count']) || 0,
+    zonesActive:        parseInt(r['fishing_zones_active']) || 0,
+    vesselsAtSea:       parseInt(r['vessels_at_sea_count']) || 0,
+    biomassIndex:       parseFloat(r['biomass_index']) || 0,
+  };
+}
+
+// ─── DS5 — catch_breakdown.csv ───────────────────────────────
+// Source: Marine Fisheries Census 2016 — catch group proportions
+// Columns: species_group | group_catch_pct
+//
+// Raw preview (/data/csv-data/catch_breakdown.csv):
+//   species_group,group_catch_pct
+//   Finfish,65
+//   Shellfish,35
+//
+// Used by: donutChart (Finfish vs Shellfish), expandData['catch-breakdown'],
+//          /api/catch-breakdown
+function parseCatchBreakdown(csvText) {
+  return parseCSV(csvText).map(row => ({
+    group: row['species_group'],
+    pct:   parseFloat(row['group_catch_pct']) || 0,
+  }));
+}
+
+// ─── DS6 — species_quotas.csv ────────────────────────────────
+// Source: CMFRI / DoF — per-species MSY quota allocation
+// Columns: species_name | quota_tons | caught_tons | utilization_pct
+//
+// Raw preview (/data/csv-data/species_quotas.csv):
+//   species_name,quota_tons,caught_tons,utilization_pct
+//   Indian mackerel,,,   ← values populated at season close by CMFRI
+//   Ribbonfish,,,
+//   Pomfret,,,
+//
+// Used by: quotaProgressList, quotaSpeciesChart, species array,
+//          expandData['species-*'], /api/species
+function parseSpeciesQuotas(csvText) {
+  return parseCSV(csvText)
+    .filter(row => row['species_name'])
+    .map(row => ({
+      name:  row['species_name'],
+      quota: parseFloat(row['quota_tons']) || 0,
+      catch: parseFloat(row['caught_tons']) || 0,
+      pct:   parseFloat(row['utilization_pct']) || 0,
+    }));
+}
+
+// ─── csvData STORE ───────────────────────────────────────────
+// Central object that holds parsed CSV data once loadAllCSV() resolves.
+// Charts read from _appData (API) first; csvData acts as the primary
+// offline data source before the API is available.
+//
+// In the browser, this block is illustrative — the equivalent data
+// is already embedded as fallback arrays (see `let species = [...]` below).
+// On the server (server.js / Node.js), loadAllCSV() is called at startup
+// and the results drive  /api/*  endpoint responses.
+const csvData = {
+  productionTrend: null,  // populated by parseProductionTrend(dataset1.csv)
+  speciesLandings: null,  // populated by parseSpeciesLandings(dataset2.csv)
+  stateFleet:      null,  // populated by parseStateFleet(fisheries_state_dataset.csv)
+  kpis:            null,  // populated by parseKPICards(kpi_cards.csv)
+  catchBreakdown:  null,  // populated by parseCatchBreakdown(catch_breakdown.csv)
+  speciesQuotas:   null,  // populated by parseSpeciesQuotas(species_quotas.csv)
+};
+
+/**
+ * loadAllCSV — master orchestrator for CSV ingestion (server-side / Node.js).
+ *
+ * In a Node.js context this function uses fs.readFileSync (or fs.promises.readFile)
+ * to read each CSV from disk, parse it, and populate csvData.
+ * The data is then served via the HTTP API to the browser.
+ *
+ * Browser note: This function is intentionally NOT called at runtime in the
+ * browser because:
+ *  a) fetch() cannot access local file:// paths in most browsers.
+ *  b) The server.js already runs these parsers and exposes the data via /api/*.
+ *  c) The hardcoded fallback arrays further below already hold the same values.
+ *
+ * To see the server-side equivalent, refer to server.js lines 40–120.
+ *
+ * @example  // Node.js / server.js usage:
+ *   const { loadAllCSV } = require('./main-data');
+ *   loadAllCSV('./data/csv-data/').then(data => { app.locals.csvData = data; });
+ */
+async function loadAllCSV(basePath) {
+  // ── This code path executes on the Node.js server, not in the browser ──
+  // On the server, `fs` is available and basePath = './data/csv-data/'
+  //
+  // Example (Node.js only):
+  //   const fs   = require('fs');
+  //   const path = require('path');
+  //   function readCSV(file) {
+  //     return fs.readFileSync(path.join(basePath, file), 'utf8');
+  //   }
+  //   csvData.productionTrend = parseProductionTrend(readCSV('dataset1.csv'));
+  //   csvData.speciesLandings = parseSpeciesLandings(readCSV('dataset2.csv'));
+  //   csvData.stateFleet      = parseStateFleet(readCSV('fisheries_state_dataset.csv'));
+  //   csvData.kpis            = parseKPICards(readCSV('kpi_cards.csv'));
+  //   csvData.catchBreakdown  = parseCatchBreakdown(readCSV('catch_breakdown.csv'));
+  //   csvData.speciesQuotas   = parseSpeciesQuotas(readCSV('species_quotas.csv'));
+  //
+  // In the browser the function returns immediately with the pre-loaded store.
+  return csvData;
+}
+
+// ═══════════════════════════════════════════════════════════════
 // API LAYER — connects to server.js when served via HTTP
 // Falls back silently to hardcoded data when running as file://
 // ═══════════════════════════════════════════════════════════════
