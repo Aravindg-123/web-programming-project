@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -152,15 +152,143 @@
           </div>
         </div>
 
-        <div class="glass chart-card" style="padding:16px;grid-column:2;">
-          <div class="chart-title">Zone Status Distribution</div>
-          <div class="chart-wrap" style="display:flex;gap:16px;align-items:center;">
-            <canvas id="banStatusChart" style="max-width:110px;max-height:110px;"></canvas>
-            <div id="banStatusLegend" style="font-size:0.65rem;display:flex;flex-direction:column;gap:6px;"></div>
+        <!-- ── BOTTOM-LEFT: State-wise Ban Impact ──────────────────────── -->
+        <div class="glass" style="padding:16px;display:flex;flex-direction:column;gap:9px;overflow-y:auto;">
+
+          <!-- Countdown banner -->
+          <div id="banCountdownCard" style="display:flex;align-items:center;gap:12px;padding:10px 13px;border-radius:10px;background:rgba(229,57,53,0.08);border:1px solid rgba(229,57,53,0.20);flex-shrink:0;">
+            <div style="font-size:1.5rem;line-height:1;">⏳</div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:0.58rem;letter-spacing:0.06em;color:var(--text-secondary);text-transform:uppercase;margin-bottom:2px;">Next Ban Commences</div>
+              <div id="cdTitle" style="font-size:0.72rem;font-weight:700;color:#e53935;font-family:'Cormorant Garamond',serif;">Apr 15, 2026 — East Coast Trawl Ban</div>
+              <div id="cdTimer" style="font-size:0.62rem;color:var(--text-secondary);margin-top:2px;">Calculating…</div>
+            </div>
+            <div style="text-align:right;flex-shrink:0;">
+              <div id="cdDays" style="font-size:1.45rem;font-weight:800;color:#e53935;font-family:'Cormorant Garamond',serif;line-height:1;">—</div>
+              <div style="font-size:0.52rem;color:var(--text-secondary);">days left</div>
+            </div>
+          </div>
+
+          <!-- East Coast states -->
+          <div class="section-label" style="margin-top:2px;display:flex;align-items:center;gap:6px;">
+            <span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:#e53935;flex-shrink:0;"></span>
+            East Coast Ban &nbsp;·&nbsp; Apr 15 – Jun 14, 2026
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <div style="display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:center;padding:5px 9px;background:rgba(229,57,53,0.06);border-radius:7px;border-left:3px solid #e53935;">
+              <span style="font-size:0.64rem;font-weight:600;">Tamil Nadu</span>
+              <span style="font-size:0.58rem;color:var(--text-secondary);">43,355 crafts · 7,95,708 fisherfolk</span>
+              <span style="font-size:0.56rem;background:rgba(229,57,53,0.15);color:#e53935;padding:2px 6px;border-radius:4px;font-weight:600;">UPCOMING</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:center;padding:5px 9px;background:rgba(229,57,53,0.06);border-radius:7px;border-left:3px solid #e53935;">
+              <span style="font-size:0.64rem;font-weight:600;">Andhra Pradesh</span>
+              <span style="font-size:0.58rem;color:var(--text-secondary);">20,219 crafts · 5,17,435 fisherfolk</span>
+              <span style="font-size:0.56rem;background:rgba(229,57,53,0.15);color:#e53935;padding:2px 6px;border-radius:4px;font-weight:600;">UPCOMING</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:center;padding:5px 9px;background:rgba(229,57,53,0.06);border-radius:7px;border-left:3px solid #e53935;">
+              <span style="font-size:0.64rem;font-weight:600;">West Bengal</span>
+              <span style="font-size:0.58rem;color:var(--text-secondary);">11,054 crafts · 3,68,816 fisherfolk</span>
+              <span style="font-size:0.56rem;background:rgba(229,57,53,0.15);color:#e53935;padding:2px 6px;border-radius:4px;font-weight:600;">UPCOMING</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:center;padding:5px 9px;background:rgba(229,57,53,0.06);border-radius:7px;border-left:3px solid #e53935;">
+              <span style="font-size:0.64rem;font-weight:600;">Odisha</span>
+              <span style="font-size:0.58rem;color:var(--text-secondary);">8,682 crafts · 5,17,623 fisherfolk</span>
+              <span style="font-size:0.56rem;background:rgba(229,57,53,0.15);color:#e53935;padding:2px 6px;border-radius:4px;font-weight:600;">UPCOMING</span>
+            </div>
+          </div>
+
+          <!-- West Coast states -->
+          <div class="section-label" style="margin-top:2px;display:flex;align-items:center;gap:6px;">
+            <span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:#d4900a;flex-shrink:0;"></span>
+            West Coast Ban &nbsp;·&nbsp; Jun 1 – Jul 31, 2026
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <div style="display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:center;padding:5px 9px;background:rgba(212,144,10,0.06);border-radius:7px;border-left:3px solid #d4900a;">
+              <span style="font-size:0.64rem;font-weight:600;">Gujarat</span>
+              <span style="font-size:0.58rem;color:var(--text-secondary);">27,642 crafts · 3,54,992 fisherfolk</span>
+              <span style="font-size:0.56rem;background:rgba(212,144,10,0.15);color:#d4900a;padding:2px 6px;border-radius:4px;font-weight:600;">UPCOMING</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:center;padding:5px 9px;background:rgba(212,144,10,0.06);border-radius:7px;border-left:3px solid #d4900a;">
+              <span style="font-size:0.64rem;font-weight:600;">Kerala</span>
+              <span style="font-size:0.58rem;color:var(--text-secondary);">21,684 crafts · 5,63,903 fisherfolk</span>
+              <span style="font-size:0.56rem;background:rgba(212,144,10,0.15);color:#d4900a;padding:2px 6px;border-radius:4px;font-weight:600;">UPCOMING</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:center;padding:5px 9px;background:rgba(212,144,10,0.06);border-radius:7px;border-left:3px solid #d4900a;">
+              <span style="font-size:0.64rem;font-weight:600;">Maharashtra</span>
+              <span style="font-size:0.58rem;color:var(--text-secondary);">15,520 crafts · 3,64,899 fisherfolk</span>
+              <span style="font-size:0.56rem;background:rgba(212,144,10,0.15);color:#d4900a;padding:2px 6px;border-radius:4px;font-weight:600;">UPCOMING</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:center;padding:5px 9px;background:rgba(212,144,10,0.06);border-radius:7px;border-left:3px solid #d4900a;">
+              <span style="font-size:0.64rem;font-weight:600;">Karnataka</span>
+              <span style="font-size:0.58rem;color:var(--text-secondary);">11,884 crafts · 1,57,989 fisherfolk</span>
+              <span style="font-size:0.56rem;background:rgba(212,144,10,0.15);color:#d4900a;padding:2px 6px;border-radius:4px;font-weight:600;">UPCOMING</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:center;padding:5px 9px;background:rgba(212,144,10,0.06);border-radius:7px;border-left:3px solid #d4900a;">
+              <span style="font-size:0.64rem;font-weight:600;">Goa</span>
+              <span style="font-size:0.58rem;color:var(--text-secondary);">1,982 crafts · 12,651 fisherfolk</span>
+              <span style="font-size:0.56rem;background:rgba(212,144,10,0.15);color:#d4900a;padding:2px 6px;border-radius:4px;font-weight:600;">UPCOMING</span>
+            </div>
+          </div>
+
+          <!-- Totals row -->
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:auto;padding-top:6px;border-top:1px solid rgba(128,128,128,0.15);flex-shrink:0;">
+            <div style="text-align:center;padding:7px 4px;background:rgba(229,57,53,0.08);border-radius:8px;">
+              <div style="font-size:0.72rem;font-weight:800;color:#e53935;font-family:'Cormorant Garamond',serif;">83,310</div>
+              <div style="font-size:0.52rem;color:var(--text-secondary);">East Coast crafts</div>
+            </div>
+            <div style="text-align:center;padding:7px 4px;background:rgba(212,144,10,0.08);border-radius:8px;">
+              <div style="font-size:0.72rem;font-weight:800;color:#d4900a;font-family:'Cormorant Garamond',serif;">78,712</div>
+              <div style="font-size:0.52rem;color:var(--text-secondary);">West Coast crafts</div>
+            </div>
+            <div style="text-align:center;padding:7px 4px;background:rgba(0,151,167,0.08);border-radius:8px;">
+              <div style="font-size:0.72rem;font-weight:800;color:#0097a7;font-family:'Cormorant Garamond',serif;">~22 L</div>
+              <div style="font-size:0.52rem;color:var(--text-secondary);">Fisherfolk affected</div>
+            </div>
           </div>
         </div>
 
-      </div>
+        <!-- ── BOTTOM-RIGHT: Zone Status + Rich Stats ───────────────────── -->
+        <div class="glass chart-card" style="padding:16px;display:flex;flex-direction:column;gap:10px;overflow:hidden;">
+          <div class="chart-title">Zone Status Distribution</div>
+
+          <!-- Donut + legend row — bigger canvas -->
+          <div style="display:flex;gap:14px;align-items:center;height:140px;flex-shrink:0;">
+            <div style="position:relative;width:140px;height:140px;flex-shrink:0;">
+              <canvas id="banStatusChart"></canvas>
+            </div>
+            <div id="banStatusLegend" style="font-size:0.64rem;display:flex;flex-direction:column;gap:8px;flex:1;overflow:hidden;"></div>
+          </div>
+
+          <!-- 4-stat summary grid -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;flex-shrink:0;">
+            <div style="padding:9px 10px;background:rgba(229,57,53,0.07);border-radius:9px;border-left:3px solid #e53935;">
+              <div style="font-size:0.7rem;font-weight:700;color:#e53935;">61 days</div>
+              <div style="font-size:0.55rem;color:var(--text-secondary);margin-top:2px;">East Coast ban duration<br><span style="opacity:0.7;">Apr 15 – Jun 14</span></div>
+            </div>
+            <div style="padding:9px 10px;background:rgba(212,144,10,0.07);border-radius:9px;border-left:3px solid #d4900a;">
+              <div style="font-size:0.7rem;font-weight:700;color:#d4900a;">61 days</div>
+              <div style="font-size:0.55rem;color:var(--text-secondary);margin-top:2px;">West Coast ban duration<br><span style="opacity:0.7;">Jun 1 – Jul 31</span></div>
+            </div>
+            <div style="padding:9px 10px;background:rgba(46,125,50,0.07);border-radius:9px;border-left:3px solid #2e7d32;">
+              <div style="font-size:0.7rem;font-weight:700;color:#2e7d32;">1,62,022</div>
+              <div style="font-size:0.55rem;color:var(--text-secondary);margin-top:2px;">Total crafts affected<br><span style="opacity:0.7;">Census 2016 baseline</span></div>
+            </div>
+            <div style="padding:9px 10px;background:rgba(0,151,167,0.07);border-radius:9px;border-left:3px solid #0097a7;">
+              <div style="font-size:0.7rem;font-weight:700;color:#0097a7;">MoFAH&amp;D</div>
+              <div style="font-size:0.55rem;color:var(--text-secondary);margin-top:2px;">Enforcing authority<br><span style="opacity:0.7;">Gazette SO 1568(E)</span></div>
+            </div>
+          </div>
+
+          <!-- Species spawning protection note -->
+          <div style="padding:8px 10px;background:rgba(124,58,237,0.06);border-radius:8px;border-left:3px solid #7c3aed;flex-shrink:0;">
+            <div style="font-size:0.6rem;font-weight:600;color:#7c3aed;margin-bottom:3px;">🐟 Species Protected During Ban</div>
+            <div style="font-size:0.58rem;color:var(--text-secondary);line-height:1.5;">
+              Indian Mackerel · Oil Sardine · Penaeid Shrimp · Ribbonfish · Seer Fish · Pomfret
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /sub-main -->
 
       <div class="data-source-strip">
         <span class="ds-label">Data Sources:</span>
@@ -171,6 +299,8 @@
         <a href="https://mausam.imd.gov.in" target="_blank" rel="noopener" class="ds-link">IMD Marine Warnings</a>
         <span class="ds-sep">&middot;</span>
         <a href="https://www.cmfri.org.in/" target="_blank" rel="noopener" class="ds-link">CMFRI (Species &amp; Biomass)</a>
+        <span class="ds-sep">&middot;</span>
+        <a href="https://dof.gov.in/statistics" target="_blank" rel="noopener" class="ds-link">Marine Fisheries Census 2016</a>
       </div>
 
       <div class="dash-footer">
@@ -184,7 +314,43 @@
   </div><!-- /dashboard -->
 
   <script src="main.js"></script>
-<script src="enhancements.js"></script>
+  <script src="enhancements.js"></script>
+
+  <!-- Live countdown to next ban -->
+  <script>
+    (function () {
+      var BANS = [
+        { date: new Date('2026-04-15'), label: 'Apr 15, 2026 — East Coast Trawl Ban' },
+        { date: new Date('2026-06-01'), label: 'Jun 1, 2026 — West Coast Trawl Ban' },
+      ];
+      function update() {
+        var now  = new Date();
+        var next = null;
+        for (var i = 0; i < BANS.length; i++) {
+          if (BANS[i].date > now) { next = BANS[i]; break; }
+        }
+        var titleEl = document.getElementById('cdTitle');
+        var timerEl = document.getElementById('cdTimer');
+        var daysEl  = document.getElementById('cdDays');
+        if (!titleEl) return;
+        if (!next) {
+          titleEl.textContent = 'All 2026 bans are active or completed';
+          timerEl.textContent = 'Next review: Oct 2026';
+          daysEl.textContent  = '—';
+          return;
+        }
+        var diff  = next.date - now;
+        var days  = Math.floor(diff / 86400000);
+        var hours = Math.floor((diff % 86400000) / 3600000);
+        var mins  = Math.floor((diff % 3600000) / 60000);
+        titleEl.textContent = next.label;
+        timerEl.textContent = hours + 'h ' + mins + 'm remaining today';
+        daysEl.textContent  = days;
+      }
+      update();
+      setInterval(update, 60000);
+    })();
+  </script>
 </body>
 
 </html>

@@ -42,7 +42,7 @@
     { code:'KL', name:'Kerala',           lon: 75.60, lat: 9.48  },
     { code:'TN', name:'Tamil Nadu',       lon: 78.80, lat: 11.00 },
     { code:'AP', name:'Andhra Pradesh',   lon: 79.50, lat: 15.50 },
-    { code:'OR', name:'Odisha',           lon: 84.70, lat: 20.70 },
+    { code:'OD', name:'Odisha',           lon: 84.70, lat: 20.70 },
     { code:'WB', name:'West Bengal',      lon: 88.25, lat: 24.60 },
   ];
 
@@ -171,6 +171,16 @@
     var bColor=banCol(b.status), uPct=q.utilization_pct;
     var barCol=uPct>=90?'#e53935':uPct>=80?'#d4900a':'#2e7d32';
     var chips = q.key_species.map(function(s){ return '<span class="sp-species-chip">'+s+'</span>'; }).join('');
+    // Census stats row (from fisheries_state_dataset.csv)
+    var censusHTML = '';
+    if (d.coastal_length_km || d.fisherfolk_population || d.total_crafts) {
+      censusHTML = '<div class="sp-section-label">Census 2016 Data</div>'+
+        '<div class="sp-quota-grid">'+
+        (d.coastal_length_km ? '<div class="sp-stat-box"><div class="sp-stat-val">'+d.coastal_length_km+'</div><div class="sp-stat-lbl">Coast (km)</div></div>' : '') +
+        (d.fisherfolk_population ? '<div class="sp-stat-box"><div class="sp-stat-val">'+d.fisherfolk_population.toLocaleString()+'</div><div class="sp-stat-lbl">Fisherfolk</div></div>' : '') +
+        (d.total_crafts ? '<div class="sp-stat-box"><div class="sp-stat-val">'+d.total_crafts.toLocaleString()+'</div><div class="sp-stat-lbl">Total Crafts</div></div>' : '') +
+        '</div>';
+    }
     var alHTML = '';
     if (al && al.length) {
       alHTML = '<div class="sp-section-label">Active Alerts</div>';
@@ -195,6 +205,7 @@
       '<div class="sp-stat-box"><div class="sp-stat-val" style="color:'+barCol+'">'+fmtN(q.current_catch_tons)+'</div><div class="sp-stat-lbl">Caught (t)</div></div>'+
       '<div class="sp-stat-box"><div class="sp-stat-val" style="color:'+barCol+'">'+uPct+'%</div><div class="sp-stat-lbl">Used</div></div></div>'+
       '<div class="sp-util-bar-track"><div class="sp-util-bar-fill" data-w="'+uPct+'%" style="width:0;background:'+barCol+'"></div></div>'+
+      censusHTML+
       '<div class="sp-section-label">Key Species</div><div class="sp-species-row">'+chips+'</div>'+
       '<div class="sp-section-label">Seasonal Ban</div>'+
       '<div class="sp-ban-card" style="border-left-color:'+bColor+'">'+

@@ -542,11 +542,16 @@ All data in this dashboard is **representative/illustrative** based on publicly 
 
 Data sources that inspired this dashboard:
 - [ICES — International Council for the Exploration of the Sea](https://www.ices.dk)
-- [NAFO — Northwest Atlantic Fisheries Organization](https://www.nafo.int)
-- [FAO — State of World Fisheries and Aquaculture](https://www.fao.org)
-- [European Commission — Fisheries Management](https://ec.europa.eu/fisheries)
 
+Data sources from where the Dataset is taken for this dashboard:
+> Data Regarding KPIs, Metrics, etc. are taken from CMFRI 2016 Census
+- [CMFRI - Central Marine Fisheries Research Institute] (https://www.cmfri.org.in/marine-fisheries-census)
+
+> Data Regarding overall production, catch, etc.  and monthly metrics are taken from Govt. of India - Data Portal
+- [Govt. of India - Data Portal] (data.gov.in)
 ---
+
+
 
 ## License
 

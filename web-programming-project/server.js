@@ -196,8 +196,9 @@ app.get('/api/kpis', async (req, res) => {
         totalQuota,
         currentCatch,
         catchPercent: Math.round((currentCatch / totalQuota) * 100),
-        activeAlerts: 3, criticalAlerts: 2, zonesActive: 6, restrictedZones: 2,
-        vesselsAtSea: 8800, biomassIndex: 78, biomassStatus: 'Moderate',
+        // kpi_cards.csv values: active_alerts=5, zones=4, biomass_index=0.911
+        activeAlerts: 5, criticalAlerts: 1, zonesActive: 4, restrictedZones: 0,
+        vesselsAtSea: null, biomassIndex: 91.1, biomassStatus: 'Healthy',
       };
     });
     send(res, data, 'live-api');
@@ -515,6 +516,48 @@ app.get('/api/zones-production', async (req, res) => {
   } catch (err) {
     console.warn('[/api/zones-production] falling back to dummy:', err.message);
     send(res, [], 'dummy');
+  }
+});
+
+// ════════════════════════════════════════════════════════════════
+// ENDPOINT: GET /api/production-trend
+// Pattern B — dataset1.csv: Year-wise Total Fish Production 2019–24
+//   File: /data/csv-data/dataset1.csv  (checked in to repo)
+//   Columns: Year, Total_Fish_Production_Lakh_Tonnes,
+//            Total_Fisheries_Exports_Quantity_MT,
+//            Total_Fisheries_Exports_Value_Crore_Rs
+// Falls back to inline dataset1 values if the file is missing.
+// ════════════════════════════════════════════════════════════════
+app.get('/api/production-trend', async (req, res) => {
+  try {
+    const data = await cached('production-trend', TTL_CSV, async () => {
+      // Primary: try reading from /data/csv-data/dataset1.csv (repo CSV)
+      const filepath = path.join(__dirname, 'data', 'csv-data', 'dataset1.csv');
+      if (fs.existsSync(filepath)) {
+        const content = fs.readFileSync(filepath, 'utf8');
+        const rows = await new Promise((resolve, reject) => {
+          parse(content, { columns: true, trim: true }, (err, r) => err ? reject(err) : resolve(r));
+        });
+        return rows.map(r => ({
+          year:       r['Year'] || r['year'],
+          production: parseFloat(r['Total_Fish_Production_Lakh_Tonnes'] || r['production_lakh_tonnes'] || 0),
+          exports_mt: parseFloat(r['Total_Fisheries_Exports_Quantity_MT'] || 0),
+          exports_cr: parseFloat(r['Total_Fisheries_Exports_Value_Crore_Rs'] || 0),
+        }));
+      }
+      // Fallback: inline dataset1.csv values (source: data.gov.in DS1)
+      return [
+        { year: '2019-20', production: 141.64, exports_mt: 1336824, exports_cr: 46662.85 },
+        { year: '2020-21', production: 147.25, exports_mt: 1175174, exports_cr: 43720.02 },
+        { year: '2021-22', production: 162.48, exports_mt: 1340000, exports_cr: 57587.00 },
+        { year: '2022-23', production: 175.45, exports_mt: 1781602, exports_cr: 60523.89 },
+        { year: '2023-24', production: 182.70, exports_mt: 1781602, exports_cr: 60524.00 },
+      ];
+    });
+    send(res, data, 'csv-file');
+  } catch (err) {
+    console.warn('[/api/production-trend] error:', err.message);
+    res.json([]);
   }
 });
 

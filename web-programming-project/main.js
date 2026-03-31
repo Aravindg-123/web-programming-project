@@ -1,7 +1,8 @@
-﻿// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════
 // API LAYER — connects to server.js when served via HTTP
 // Falls back silently to hardcoded data when running as file://
 // ═══════════════════════════════════════════════════════════════
+
 const API_BASE = window.location.protocol === 'file:'
   ? null   // running as file:// — use hardcoded FALLBACK data
   : (window.location.origin || 'http://localhost:3000');
@@ -52,14 +53,14 @@ const ON_DASHBOARD = !!document.getElementById('barChart');
 // Real source: https://eprints.cmfri.org.in
 // DATA SOURCE: CMFRI — https://www.cmfri.org.in/
 let species = [
-  { name: 'Indian Mackerel',  pct: 87, color: '#0097a7', quota: 280000, catch: 245000 },
-  { name: 'Oil Sardine',      pct: 74, color: '#2e7d32', quota: 350000, catch: 260000 },
-  { name: 'Ribbonfish',       pct: 81, color: '#d4900a', quota: 220000, catch: 180000 },
-  { name: 'Penaeid Shrimp',   pct: 86, color: '#7c3aed', quota: 190000, catch: 165000 },
-  { name: 'Bombay Duck',      pct: 84, color: '#0288d1', quota: 130000, catch: 110000 },
-  { name: 'Croakers',         pct: 83, color: '#e53935', quota: 150000, catch: 125000 },
-  { name: 'Seer Fish',        pct: 91, color: '#d84315', quota: 60000,  catch: 55000  },
-  { name: 'Pomfret',          pct: 62, color: '#1565c0', quota: 90000,  catch: 55800  },
+  { name: 'Indian Mackerel', pct: 87, color: '#0097a7', quota: 280000, catch: 245000 },
+  { name: 'Oil Sardine', pct: 74, color: '#2e7d32', quota: 350000, catch: 260000 },
+  { name: 'Ribbonfish', pct: 81, color: '#d4900a', quota: 220000, catch: 180000 },
+  { name: 'Penaeid Shrimp', pct: 86, color: '#7c3aed', quota: 190000, catch: 165000 },
+  { name: 'Bombay Duck', pct: 84, color: '#0288d1', quota: 130000, catch: 110000 },
+  { name: 'Croakers', pct: 83, color: '#e53935', quota: 150000, catch: 125000 },
+  { name: 'Seer Fish', pct: 91, color: '#d84315', quota: 60000, catch: 55000 },
+  { name: 'Pomfret', pct: 62, color: '#1565c0', quota: 90000, catch: 55800 },
   { name: 'Squid & Cuttlefish', pct: 45, color: '#6a1b9a', quota: 80000, catch: 36000 },
 ];
 
@@ -217,29 +218,37 @@ function initCharts() {
   const def = buildChartDefaults();
   const c = getChartColors();
 
-  // Monthly bar — India monthly catch (Aug 2025 – Feb 2026, in '000 tons)
-  // Source: CMFRI Monthly Marine Flash Bulletin — https://www.cmfri.org.in/
+  // Annual production bar — India year-wise total fish production (Lakh Tonnes)
+  // Source: dataset1.csv — data.gov.in DS1 (Year-wise Fish Production 2019-20 to 2023-24)
+  const prodLabels = ['2019-20', '2020-21', '2021-22', '2022-23', '2023-24'];
+  const prodData = [141.64, 147.25, 162.48, 175.45, 182.70];  // Lakh tonnes
   charts.bar = new Chart(document.getElementById('barChart'), {
     type: 'bar',
     data: {
-      labels: ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb'],
+      labels: prodLabels,
       datasets: [{
-        data: [280000, 310000, 340000, 320000, 290000, 270000, 250000],
-        backgroundColor: 'rgba(0,151,167,0.22)',
-        borderColor: 'rgba(0,151,167,0.70)',
-        borderWidth: 1, borderRadius: 3,
+        label: 'Production (Lakh t)',
+        data: prodData,
+        backgroundColor: ['rgba(0,151,167,0.22)', 'rgba(0,151,167,0.28)', 'rgba(0,151,167,0.35)', 'rgba(0,151,167,0.45)', 'rgba(0,151,167,0.60)'],
+        borderColor: 'rgba(0,151,167,0.80)',
+        borderWidth: 1, borderRadius: 4,
       }]
     },
     options: { ...def, animation: { duration: 1000 } }
   });
+  // Update bar chart from fetched production-trend API if available
+  const prodTrend = _appData.productionTrend;
+  if (prodTrend && Array.isArray(prodTrend) && prodTrend.length) {
+    charts.bar.data.labels = prodTrend.map(r => r.year);
+    charts.bar.data.datasets[0].data = prodTrend.map(r => r.production);
+    charts.bar.update();
+  }
 
-  // Donut — India catch breakdown by category
-  // Source: CMFRI Species Landings — https://eprints.cmfri.org.in
+  // Donut — India catch breakdown by species group
+  // Source: catch_breakdown.csv — Marine Fisheries Census 2016
   const donutData = [
-    { label: 'Pelagic', val: 54, color: '#0097a7' },
-    { label: 'Demersal', val: 29, color: '#d4900a' },
-    { label: 'Crustaceans', val: 11, color: '#2e7d32' },
-    { label: 'Molluscs & Other', val: 6, color: '#7c3aed' },
+    { label: 'Finfish', val: 65, color: '#0097a7' },
+    { label: 'Shellfish', val: 35, color: '#d4900a' },
   ];
   charts.donut = new Chart(document.getElementById('donutChart'), {
     type: 'doughnut',
@@ -280,19 +289,19 @@ function initCharts() {
     options: { ...def, animation: { duration: 1200 } }
   });
 
-  // Fleet chart — vessel count by Indian state
-  // Source: DoF Marine Fisheries Census — https://dof.gov.in/statistics
+  // Fleet chart — total fishing crafts by Indian state (Marine Fisheries Census 2016)
+  // Source: fisheries_state_dataset.csv — total_crafts column
   charts.fleet = new Chart(document.getElementById('fleetChart'), {
     type: 'bar',
     data: {
-      labels: ['Gujarat', 'Tamil Nadu', 'Maharashtra', 'Kerala', 'Others'],
+      labels: ['Gujarat', 'Tamil Nadu', 'Kerala', 'Andhra Pradesh', 'Maharashtra'],
       datasets: [{
-        data: [65, 52, 48, 42, 40],
+        data: [27642, 43355, 21684, 20219, 15520],
         backgroundColor: [
           'rgba(0,151,167,0.35)', 'rgba(2,136,209,0.35)',
-          'rgba(46,125,50,0.35)', 'rgba(124,58,237,0.35)', 'rgba(212,144,10,0.35)'
+          'rgba(124,58,237,0.35)', 'rgba(46,125,50,0.35)', 'rgba(212,144,10,0.35)'
         ],
-        borderColor: ['#0097a7', '#0288d1', '#2e7d32', '#7c3aed', '#d4900a'],
+        borderColor: ['#0097a7', '#0288d1', '#7c3aed', '#2e7d32', '#d4900a'],
         borderWidth: 1, borderRadius: 3,
       }]
     },
@@ -359,14 +368,14 @@ function initQuotaCharts() {
     }
   });
 
-  // Region donut — India coastal quota distribution
-  // Source: DoF Statistics — https://dof.gov.in/statistics
+  // Region donut — India coastal quota distribution by state (fisheries_state_dataset.csv fisherfolk pop)
+  // Source: fisheries_state_dataset.csv
   charts.quotaRegion = new Chart(document.getElementById('quotaRegionChart'), {
     type: 'doughnut',
     data: {
-      labels: ['Gujarat Coast', 'Tamil Nadu Coast', 'Kerala Coast', 'Maharashtra Coast', 'Andhra Pradesh', 'Others'],
+      labels: ['Gujarat', 'Tamil Nadu', 'Kerala', 'Andhra Pradesh', 'Maharashtra', 'Others'],
       datasets: [{
-        data: [770000, 700000, 560000, 385000, 350000, 735000],
+        data: [750000, 710000, 650000, 400000, 450000, 840000],
         backgroundColor: ['rgba(229,57,53,0.55)', 'rgba(212,144,10,0.55)', 'rgba(0,151,167,0.55)', 'rgba(46,125,50,0.55)', 'rgba(2,136,209,0.55)', 'rgba(124,58,237,0.55)'],
         borderWidth: 0, hoverOffset: 6,
       }]
@@ -595,6 +604,11 @@ async function loadAllData() {
     // Real source: https://eprints.cmfri.org.in
     fetch(API_BASE + '/api/biomass-trend').then(r => r.json()).then(d => ({ key: 'biomassTrend', data: d })),
 
+    // DATA SOURCE: /api/production-trend
+    // Real dataset: dataset1.csv — Year-wise Fish Production 2019-24 | Access pattern: B
+    // Real source: https://www.data.gov.in/resource/year-wise-details-total-fish-production-and-fisheries-exports-2019-20-2023-24
+    fetch(API_BASE + '/api/production-trend').then(r => r.json()).then(d => ({ key: 'productionTrend', data: d })),
+
     // DATA SOURCE: /api/ocean-conditions
     // Real dataset: NEW-3 — Open-Meteo Marine (INCOIS OSF fallback) | Access pattern: A
     // Real source: https://incois.gov.in/portal/osf/osf.jsp
@@ -612,8 +626,8 @@ async function loadAllData() {
         const arr = data.data || data;
         // Map API format → internal format used by chart functions
         species = arr.map(s => ({
-          name:  s.name,
-          pct:   s.percent,
+          name: s.name,
+          pct: s.percent,
           color: s.color,
           quota: s.quota,
           catch: s.caught,
@@ -622,9 +636,9 @@ async function loadAllData() {
       if (key === 'alerts' && Array.isArray(data.data || data)) {
         const arr = data.data || data;
         activities = arr.map(a => ({
-          col:   a.severity === 'critical' ? '#e53935' : a.severity === 'warning' ? '#d4900a' : '#0097a7',
+          col: a.severity === 'critical' ? '#e53935' : a.severity === 'warning' ? '#d4900a' : '#0097a7',
           title: a.title,
-          time:  new Date(a.timestamp).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) + ' IST',
+          time: new Date(a.timestamp).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) + ' IST',
         }));
       }
     } else {
@@ -639,8 +653,8 @@ async function loadAllData() {
 // Charts are initialised after loadAllData() resolves so they
 // use fetched data when the backend is available.
 loadAllData().then(() => {
-  if (ON_QUOTAS)   initQuotaCharts();
-  if (ON_ALERTS)   initAlertCharts();
+  if (ON_QUOTAS) initQuotaCharts();
+  if (ON_ALERTS) initAlertCharts();
   if (ON_SEASONAL) initSeasonalCharts();
   if (ON_DASHBOARD) {
     // Re-render species list and activity feed with (possibly updated) API data
@@ -664,6 +678,8 @@ loadAllData().then(() => {
       setTimeout(() => {
         sl.querySelectorAll('.quota-bar-fill').forEach(el => { el.style.width = el.dataset.w; });
       }, 150);
+      // Re-attach click listeners after re-render
+      attachSpeciesRowClicks();
     }
     const feedEl = document.getElementById('activityFeed');
     if (feedEl) {
@@ -688,8 +704,8 @@ loadAllData().then(() => {
   updateChartsTheme();
 }).catch(err => {
   console.error('[loadAllData] unexpected error:', err);
-  if (ON_QUOTAS)   initQuotaCharts();
-  if (ON_ALERTS)   initAlertCharts();
+  if (ON_QUOTAS) initQuotaCharts();
+  if (ON_ALERTS) initAlertCharts();
   if (ON_SEASONAL) initSeasonalCharts();
   if (ON_DASHBOARD) initCharts();
   updateChartsTheme();
@@ -946,38 +962,38 @@ const expandData = {
   quota: {
     icon: '🎣',
     title: 'Total Annual Quota (MSY)',
-    sub: 'Indian Marine Fisheries — 2025–26 Allocation · Source: DoF / data.gov.in',
+    sub: 'Indian Marine Fisheries — 2025–26 Allocation · Source: kpi_cards.csv / DoF',
     sourceUrl: 'https://data.gov.in/sector/fisheries',
     stats: [
-      { val: '39 Lakh t', lbl: 'Total MSY', sc: 'sc-teal' },
-      { val: '34 Lakh t', lbl: 'Current Catch', sc: 'sc-amber' },
-      { val: '87%', lbl: 'Utilized', sc: 'sc-green' },
+      { val: '38 Lakh t', lbl: 'Total Quota', sc: 'sc-teal' },
+      { val: '35 Lakh t', lbl: 'Current Catch', sc: 'sc-amber' },
+      { val: '92.1%', lbl: 'Utilized', sc: 'sc-red' },
     ],
     details: [
       ['Allocation Method', 'MSY — Maximum Sustainable Yield'],
       ['Regulatory Body', 'Ministry of Fisheries, Animal Husbandry & Dairying'],
       ['Period', 'Apr 1, 2025 – Mar 31, 2026'],
       ['Species Covered', '9+ commercially managed species'],
-      ['Remaining Quota', '~5 Lakh tons'],
+      ['Remaining Quota', '~3 Lakh tons (7.9% unused)'],
     ],
     chart: { type: 'bar', labels: ['Indian Mackerel', 'Oil Sardine', 'Ribbonfish', 'Penaeid Shrimp', 'Bombay Duck', 'Croakers', 'Seer Fish'], data: [245000, 260000, 180000, 165000, 110000, 125000, 55000], color: '#0097a7' }
   },
   catch: {
     icon: '⚖️',
     title: 'Current Catch Status',
-    sub: 'Aggregated marine catch data — India EEZ · Source: CMFRI',
+    sub: 'Aggregated marine catch data — India EEZ · Source: kpi_cards.csv / CMFRI',
     sourceUrl: 'https://www.cmfri.org.in/',
     stats: [
-      { val: '34 Lakh t', lbl: 'Tons caught', sc: 'sc-teal' },
-      { val: '87%', lbl: 'Of annual MSY', sc: 'sc-amber' },
+      { val: '35 Lakh t', lbl: 'Tons caught', sc: 'sc-teal' },
+      { val: '92.1%', lbl: 'Of annual quota', sc: 'sc-red' },
       { val: '14,205', lbl: 'Vessels active', sc: 'sc-violet' },
     ],
     details: [
-      ['Daily Average', '~9,315 tons/day'],
-      ['Projected Year End', '~3.7M tons (95% of MSY)'],
-      ['Peak Catch Month', 'October — 340,000 tons'],
-      ['Lowest Catch Month', 'February — 250,000 tons'],
-      ['Pelagic Share', '54% of total catch'],
+      ['Quota (total_quota_tons)', '3,800,000 tons'],
+      ['Catch (current_catch_tons)', '3,500,000 tons'],
+      ['Utilization', '92.1% of annual quota'],
+      ['Finfish Share', '65% of total catch (Census 2016)'],
+      ['Shellfish Share', '35% of total catch (Census 2016)'],
     ],
     chart: { type: 'line', labels: ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb'], data: [280000, 310000, 340000, 320000, 290000, 270000, 250000], color: '#d4900a' }
   },
@@ -987,9 +1003,9 @@ const expandData = {
     sub: 'INCOIS & IMD real-time monitoring · Source: incois.gov.in',
     sourceUrl: 'https://incois.gov.in/',
     stats: [
-      { val: '4', lbl: 'Total Alerts', sc: 'sc-amber' },
+      { val: '5', lbl: 'Total Alerts', sc: 'sc-amber' },
       { val: '1', lbl: 'Critical', sc: 'sc-red' },
-      { val: '2', lbl: 'Warning', sc: 'sc-amber' },
+      { val: '3', lbl: 'Warning', sc: 'sc-amber' },
     ],
     details: [
       ['Critical: Kerala & Lakshadweep', 'High waves 2.5–3.2m — vessels return'],
@@ -1003,19 +1019,19 @@ const expandData = {
   zones: {
     icon: '🌊',
     title: 'Fishing Zone Overview',
-    sub: 'India EEZ management zones — 7 active · Source: MoFAH&D / INCOIS',
+    sub: 'India EEZ management zones · Source: india_map.csv / MoFAH&D',
     sourceUrl: 'https://incois.gov.in/portal/pfz/pfz.jsp',
     stats: [
-      { val: '7', lbl: 'Total Zones', sc: 'sc-teal' },
-      { val: '2', lbl: 'Restricted', sc: 'sc-red' },
-      { val: '5', lbl: 'Active', sc: 'sc-green' },
+      { val: '4', lbl: 'Active Zones', sc: 'sc-teal' },
+      { val: 'Jun–Jul', lbl: 'West Coast Ban', sc: 'sc-red' },
+      { val: 'Apr–Jun', lbl: 'East Coast Ban', sc: 'sc-amber' },
     ],
     details: [
+      ['West Coast States', 'GJ, MH, GA, KA, KL — Ban: Jun–Jul'],
+      ['East Coast States', 'TN, AP, OD, WB — Ban: Apr–Jun'],
       ['Zone Authority', 'MoFAH&D / CMFRI / INCOIS'],
       ['Monitoring', 'INCOIS PFZ + NAVIC transponder tracking'],
       ['Coverage Area', '~2.3M km² India EEZ'],
-      ['Active Licenses', '14,205 vessels at sea'],
-      ['Zone Reviews', 'Seasonal (next monsoon ban: Apr 15)'],
     ]
   },
   vessels: {
@@ -1040,59 +1056,59 @@ const expandData = {
   biomass: {
     icon: '🐟',
     title: 'Biomass Health Index',
-    sub: 'CMFRI Annual Marine Fisheries Report · Source: eprints.cmfri.org.in',
+    sub: 'CMFRI Annual Marine Fisheries Report · Source: kpi_cards.csv / CMFRI',
     sourceUrl: 'https://eprints.cmfri.org.in/',
     stats: [
-      { val: '78%', lbl: 'Biomass Index', sc: 'sc-green' },
-      { val: 'Moderate', lbl: 'Status', sc: 'sc-amber' },
+      { val: '91.1%', lbl: 'Biomass Index', sc: 'sc-green' },
+      { val: 'Healthy', lbl: 'Status', sc: 'sc-green' },
       { val: 'CMFRI', lbl: 'Authority', sc: 'sc-blue' },
     ],
     details: [
+      ['Biomass Index (biomass_index)', '0.911 — Healthy'],
       ['Indian Mackerel Biomass', '82% — near quota cap, monitoring'],
       ['Oil Sardine Biomass', '74% — good, seasonal variation'],
       ['Penaeid Shrimp Biomass', '86% — caution, approaching limit'],
-      ['Seer Fish Biomass', '91% — approaching MSY threshold'],
       ['Assessment', 'CMFRI Annual Report 2024–25'],
     ],
     chart: { type: 'bar', labels: ['Indian Mackerel', 'Oil Sardine', 'Ribbonfish', 'Penaeid Shrimp', 'Croakers', 'Seer Fish'], data: [82, 74, 81, 86, 83, 91], color: '#2e7d32' }
   },
   'fleet-status': {
     icon: '🚢',
-    title: 'Fleet Distribution by State',
-    sub: 'Active vessels at sea by flag state — Mar 28, 2026 · Source: DoF',
+    title: 'Fleet by State — Total Crafts',
+    sub: 'Fishing crafts by state — Marine Fisheries Census 2016 · Source: fisheries_state_dataset.csv',
     sourceUrl: 'https://dof.gov.in/statistics',
     stats: [
-      { val: '14,205', lbl: 'Total Vessels', sc: 'sc-teal' },
-      { val: 'Gujarat', lbl: 'Largest Fleet', sc: 'sc-blue' },
-      { val: '~18m', lbl: 'Avg LOA', sc: 'sc-green' },
+      { val: '1,54,354', lbl: 'Total Crafts', sc: 'sc-teal' },
+      { val: 'Tamil Nadu', lbl: 'Largest Fleet', sc: 'sc-blue' },
+      { val: '13 States', lbl: 'Coverage', sc: 'sc-green' },
     ],
     details: [
-      ['Gujarat Fleet', '65 boats active today'],
-      ['Tamil Nadu Fleet', '52 boats active today'],
-      ['Maharashtra Fleet', '48 boats active today'],
-      ['Kerala Fleet', '42 boats active today'],
-      ['Other States', '40 boats active today'],
+      ['Gujarat', '27,642 crafts (14,061 mechanized)'],
+      ['Tamil Nadu', '43,355 crafts (5,961 mechanized)'],
+      ['Kerala', '21,684 crafts (3,800 mechanized)'],
+      ['Andhra Pradesh', '20,219 crafts (1,176 mechanized)'],
+      ['Maharashtra', '15,520 crafts (5,867 mechanized)'],
     ],
-    chart: { type: 'bar', labels: ['Gujarat', 'Tamil Nadu', 'Maharashtra', 'Kerala', 'Others'], data: [65, 52, 48, 42, 40], color: '#0097a7' }
+    chart: { type: 'bar', labels: ['Gujarat', 'Tamil Nadu', 'Kerala', 'Andhra Pradesh', 'Maharashtra'], data: [27642, 43355, 21684, 20219, 15520], color: '#0097a7' }
   },
   'catch-breakdown': {
     icon: '📊',
-    title: 'Catch Breakdown by Category',
-    sub: 'Species group composition — India EEZ · Source: CMFRI',
+    title: 'Catch Breakdown by Species Group',
+    sub: 'Species group composition — Marine Fisheries Census 2016 · Source: catch_breakdown.csv',
     sourceUrl: 'https://eprints.cmfri.org.in/',
     stats: [
-      { val: '54%', lbl: 'Pelagic', sc: 'sc-teal' },
-      { val: '29%', lbl: 'Demersal', sc: 'sc-amber' },
-      { val: '11%', lbl: 'Crustaceans', sc: 'sc-green' },
+      { val: '65%', lbl: 'Finfish', sc: 'sc-teal' },
+      { val: '35%', lbl: 'Shellfish', sc: 'sc-amber' },
+      { val: '3.5M t', lbl: 'Total Catch', sc: 'sc-green' },
     ],
     details: [
-      ['Pelagic (1.84M t)', 'Indian Mackerel, Oil Sardine, Anchovies'],
-      ['Demersal (0.99M t)', 'Ribbonfish, Catfish, Croakers, Pomfret'],
-      ['Crustaceans (0.37M t)', 'Penaeid Shrimp, Mud Crab'],
-      ['Molluscs & Other (0.20M t)', 'Squid, Cuttlefish, misc.'],
-      ['Export Proportion', '~22% by value — shrimp dominates export'],
+      ['Finfish (65%)', 'Inland fish, Flat fish, Sardines, Anchovies, Tunas, Misc. Marine'],
+      ['Shellfish (35%)', 'Elasmobranchs (Shark, Rays), Decapods (Prawns, Crabs)'],
+      ['Total Catch (2023–24)', '1,82.7 Lakh Tonnes (dataset1.csv)'],
+      ['Exports (2023–24)', '17,81,602 MT valued ₹60,524 cr'],
+      ['Data Source', 'Marine Fisheries Census 2016 (catch_breakdown.csv)'],
     ],
-    chart: { type: 'doughnut', labels: ['Pelagic', 'Demersal', 'Crustaceans', 'Molluscs & Other'], data: [54, 29, 11, 6], color: '#0097a7' }
+    chart: { type: 'doughnut', labels: ['Finfish', 'Shellfish'], data: [65, 35], color: '#0097a7' }
   },
   'overfishing-trend': {
     icon: '📈',
@@ -1139,7 +1155,7 @@ const expandData = {
     sourceUrl: 'https://incois.gov.in/',
     stats: [
       { val: '1', lbl: 'Critical', sc: 'sc-red' },
-      { val: '2', lbl: 'Warning', sc: 'sc-amber' },
+      { val: '3', lbl: 'Warning', sc: 'sc-amber' },
       { val: '1', lbl: 'Info', sc: 'sc-blue' },
     ],
     details: [
@@ -1171,24 +1187,22 @@ const expandData = {
   },
   monthly: {
     icon: '📆',
-    title: 'Monthly Catch Trend',
-    sub: 'August 2025 — February 2026 · Source: CMFRI Flash Bulletin',
-    sourceUrl: 'https://www.cmfri.org.in/',
+    title: 'Annual Fish Production Trend',
+    sub: '2019-20 to 2023-24 · Source: dataset1.csv / data.gov.in DS1',
+    sourceUrl: 'https://www.data.gov.in/resource/year-wise-details-total-fish-production-and-fisheries-exports-2019-20-2023-24',
     stats: [
-      { val: '340k t', lbl: 'Peak (Oct)', sc: 'sc-teal' },
-      { val: '250k t', lbl: 'Low (Feb)', sc: 'sc-blue' },
-      { val: '280k t', lbl: 'Start (Aug)', sc: 'sc-green' },
+      { val: '182.7 L t', lbl: 'Peak (2023-24)', sc: 'sc-teal' },
+      { val: '141.6 L t', lbl: 'Start (2019-20)', sc: 'sc-blue' },
+      { val: '+29%', lbl: 'Growth (5 yr)', sc: 'sc-green' },
     ],
     details: [
-      ['August 2025', '2,80,000 tons'],
-      ['September 2025', '3,10,000 tons'],
-      ['October 2025', '3,40,000 tons — peak'],
-      ['November 2025', '3,20,000 tons'],
-      ['December 2025', '2,90,000 tons'],
-      ['January 2026', '2,70,000 tons — seasonal low'],
-      ['February 2026', '2,50,000 tons'],
+      ['2019-20', '141.64 Lakh tonnes · Exports: 13,36,824 MT · ₹46,663 cr'],
+      ['2020-21', '147.25 Lakh tonnes · Exports: 11,75,174 MT · ₹43,720 cr'],
+      ['2021-22', '162.48 Lakh tonnes · Exports: 13,40,000 MT · ₹57,587 cr'],
+      ['2022-23', '175.45 Lakh tonnes · Exports: 17,81,602 MT · ₹60,524 cr'],
+      ['2023-24', '182.70 Lakh tonnes · Exports: 17,81,602 MT · ₹60,524 cr'],
     ],
-    chart: { type: 'bar', labels: ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb'], data: [280000, 310000, 340000, 320000, 290000, 270000, 250000], color: '#0097a7' }
+    chart: { type: 'bar', labels: ['2019-20', '2020-21', '2021-22', '2022-23', '2023-24'], data: [141.64, 147.25, 162.48, 175.45, 182.70], color: '#0097a7' }
   },
 };
 
@@ -1387,6 +1401,13 @@ document.querySelectorAll('[data-expand]').forEach(el => {
   el.addEventListener('click', () => openExpand(el.dataset.expand));
   el.style.cursor = 'pointer';
 });
-document.querySelectorAll('.species-row').forEach((el, i) => {
-  el.addEventListener('click', () => openExpand('species-' + i));
-});
+
+// Helper: re-attach click listeners to species rows after each re-render
+function attachSpeciesRowClicks() {
+  document.querySelectorAll('.species-row').forEach((el, i) => {
+    el.addEventListener('click', () => openExpand('species-' + i));
+    el.style.cursor = 'pointer';
+  });
+}
+// Attach for initial (synchronous) render
+attachSpeciesRowClicks();

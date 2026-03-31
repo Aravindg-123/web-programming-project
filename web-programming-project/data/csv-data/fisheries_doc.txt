@@ -1,0 +1,40 @@
+1. KPI Cards CSV
+Contains national-level fisheries indicators extracted from the report.
+Features: total_quota_tons, current_catch_tons, catch_utilization_pct, active_alerts_count, fishing_zones_active, vessels_at_sea_count, biomass_index
+2. Catch Breakdown CSV
+Represents high-level classification of marine catch into finfish and shellfish.
+Features: species_group, group_catch_pct
+3. India Map CSV
+Contains coastal classification and fishing ban periods for states.
+Features: state_code, coast_side, ban_status
+4. Species Quotas CSV
+Lists species identified in the report. Numerical quota data not available.
+Features: species_name, quota_tons, caught_tons, utilization_pct
+5.  General Data
+
+DATASET: Marine Fisheries Census 2016 – State-wise Dataset
+
+DESCRIPTION:
+This dataset contains state-wise fisheries data extracted from Census 2016 tables.
+
+FEATURES:
+- state: Name of state/UT
+- coastal_length_km: Coastline length in km
+- fisherfolk_population: Total fisherfolk population
+- coop_members_fisheries: Members in fisheries cooperatives
+- coop_members_other: Members in other cooperatives
+- coop_members_total: Total cooperative members
+- mechanized_crafts_total: Mechanized fishing crafts
+- motorized_crafts_total: Motorized fishing crafts
+- non_motorized_crafts: Non-motorized fishing crafts
+- total_crafts: Total fishing crafts
+
+DATA SOURCES:
+- Table 1 (State Profile)
+- Table 9 (Membership in Co-operatives)
+- Table 12 (Fishing Crafts)
+
+NOTES:
+- Missing values (NULL) for Lakshadweep and Andaman & Nicobar in fishing crafts data
+- Values cleaned and standardized (commas removed)
+- Dataset is ready for database insertion, analysis, or dashboard usage

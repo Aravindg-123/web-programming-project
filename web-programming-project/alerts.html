@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -59,7 +59,7 @@
             <div class="metric-icon coral"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
             <div class="metric-data">
               <div class="metric-label">Total Alerts</div>
-              <div class="metric-value coral">3</div>
+              <div class="metric-value coral">8</div>
               <div class="metric-delta">Active now</div>
             </div>
           </div>
@@ -75,7 +75,7 @@
             <div class="metric-icon amber"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
             <div class="metric-data">
               <div class="metric-label">Warning</div>
-              <div class="metric-value amber">1</div>
+              <div class="metric-value amber">3</div>
               <div class="metric-delta">Monitor closely</div>
             </div>
           </div>
@@ -83,7 +83,7 @@
             <div class="metric-icon jade"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
             <div class="metric-data">
               <div class="metric-label">Info</div>
-              <div class="metric-value jade">1</div>
+              <div class="metric-value jade">3</div>
               <div class="metric-delta">Advisory only</div>
             </div>
           </div>
@@ -100,34 +100,65 @@
           </div>
         </div>
 
-        <div class="glass" style="padding:16px;display:flex;flex-direction:column;gap:8px;">
-          <div class="section-label">Active Incident Log</div>
-          <div class="alert-item critical" style="cursor:default;">
-            <div class="alert-badge critical"></div>
-            <div class="alert-text">
-              <div class="alert-title">Kerala & Lakshadweep — high waves 2.5–3.2m, all vessels return to harbour</div>
-              <div class="alert-time">Mar 28, 2026 · 6:12 AM IST · West Coast · INCOIS Level 1</div>
+        <!-- Active Incident Log — scrollable -->
+        <div class="glass" style="padding:16px;display:flex;flex-direction:column;gap:8px;overflow:hidden;">
+          <div class="section-label" style="flex-shrink:0;">Active Incident Log</div>
+          <div style="overflow-y:auto;display:flex;flex-direction:column;gap:7px;flex:1;padding-right:3px;">
+            <div class="alert-item critical" style="cursor:default;flex-shrink:0;">
+              <div class="alert-badge critical"></div>
+              <div class="alert-text">
+                <div class="alert-title">Kerala &amp; Lakshadweep — high waves 2.5–3.2m, all vessels return to harbour</div>
+                <div class="alert-time">Mar 28, 2026 · 6:12 AM IST · West Coast · INCOIS Level 1</div>
+              </div>
             </div>
-          </div>
-          <div class="alert-item critical" style="cursor:default;">
-            <div class="alert-badge critical"></div>
-            <div class="alert-text">
-              <div class="alert-title">Tamil Nadu coast — Seer Fish vessel density above threshold</div>
-              <div class="alert-time">Mar 28, 2026 · 4:18 AM IST · East Coast · CMFRI Quota Monitor</div>
+            <div class="alert-item critical" style="cursor:default;flex-shrink:0;">
+              <div class="alert-badge critical"></div>
+              <div class="alert-text">
+                <div class="alert-title">Tamil Nadu coast — Seer Fish vessel density above threshold</div>
+                <div class="alert-time">Mar 28, 2026 · 4:18 AM IST · East Coast · CMFRI Quota Monitor</div>
+              </div>
             </div>
-          </div>
-          <div class="alert-item warning" style="cursor:default;">
-            <div class="alert-badge warning"></div>
-            <div class="alert-text">
-              <div class="alert-title">Andhra Pradesh coast — squall warning, wind 45–55 kmph gusting 65</div>
-              <div class="alert-time">Mar 28, 2026 · 3:00 AM IST · East Coast · IMD Warning</div>
+            <div class="alert-item warning" style="cursor:default;flex-shrink:0;">
+              <div class="alert-badge warning"></div>
+              <div class="alert-text">
+                <div class="alert-title">Andhra Pradesh coast — squall warning, wind 45–55 kmph gusting 65</div>
+                <div class="alert-time">Mar 28, 2026 · 3:00 AM IST · East Coast · IMD Warning</div>
+              </div>
             </div>
-          </div>
-          <div class="alert-item info" style="cursor:default;">
-            <div class="alert-badge info"></div>
-            <div class="alert-text">
-              <div class="alert-title">INCOIS PFZ Advisory — new Potential Fishing Zones off Porbandar (Gujarat)</div>
-              <div class="alert-time">Mar 28, 2026 · 9:00 AM IST · Gujarat · INCOIS Advisory</div>
+            <div class="alert-item info" style="cursor:default;flex-shrink:0;">
+              <div class="alert-badge info"></div>
+              <div class="alert-text">
+                <div class="alert-title">INCOIS PFZ Advisory — new Potential Fishing Zones off Porbandar (Gujarat)</div>
+                <div class="alert-time">Mar 28, 2026 · 9:00 AM IST · Gujarat · INCOIS Advisory</div>
+              </div>
+            </div>
+            <div class="alert-item warning" style="cursor:default;flex-shrink:0;">
+              <div class="alert-badge warning"></div>
+              <div class="alert-text">
+                <div class="alert-title">East Coast trawl ban reminder — commences Apr 15, all trawlers vacate EEZ</div>
+                <div class="alert-time">Mar 27, 2026 · 11:00 PM IST · East Coast · MoFAH&amp;D Advisory</div>
+              </div>
+            </div>
+            <div class="alert-item info" style="cursor:default;flex-shrink:0;">
+              <div class="alert-badge info"></div>
+              <div class="alert-text">
+                <div class="alert-title">Oil Sardine — North Kerala biomass survey completed by CMFRI</div>
+                <div class="alert-time">Mar 27, 2026 · 6:00 AM IST · West Coast · CMFRI Bulletin</div>
+              </div>
+            </div>
+            <div class="alert-item info" style="cursor:default;flex-shrink:0;">
+              <div class="alert-badge info"></div>
+              <div class="alert-text">
+                <div class="alert-title">DoF census update: 14,205 vessels registered at sea — Gujarat leads fleet</div>
+                <div class="alert-time">Mar 26, 2026 · 8:00 AM IST · All Zones · DoF Registry</div>
+              </div>
+            </div>
+            <div class="alert-item warning" style="cursor:default;flex-shrink:0;">
+              <div class="alert-badge warning"></div>
+              <div class="alert-text">
+                <div class="alert-title">West Coast trawl ban (Jun 1 – Jul 31) advisory issued by MoFAH&amp;D</div>
+                <div class="alert-time">Mar 25, 2026 · 10:00 AM IST · West Coast · MoFAH&amp;D</div>
+              </div>
             </div>
           </div>
         </div>
